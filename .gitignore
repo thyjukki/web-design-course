@@ -1,0 +1,7 @@
+*node_modules
+build/
+rest/
+keys/
+data/
+.env
+.vscode/

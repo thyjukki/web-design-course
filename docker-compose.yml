@@ -1,0 +1,34 @@
+version: "3.7"
+services:
+  server:
+    container_name: sisu
+    restart: unless-stopped
+    user: "1000:1000"
+    links:
+      - db
+    volumes:
+      - ./server/src:/home/node/app/src
+      - ./server/nodemon.json:/home/node/app/nodemon.json
+    network_mode: host
+    env_file:
+      - .env
+    build:
+      context: ./server
+      dockerfile: ./Dockerfile
+      target: base
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+    command: npm run dev
+  db:
+    container_name: sisu-db
+    image: mysql
+    restart: unless-stopped
+    environment: 
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASS}
+      - MYSQL_DATABASE=${MYSQL_DB}
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
+    ports:
+      - ${MYSQL_PORT}:${MYSQL_PORT}
+
