@@ -9,7 +9,6 @@ export const users = (sequelize, DataTypes) =>
     fullName: DataTypes.STRING,
     password: DataTypes.STRING,
     email: DataTypes.STRING,
-    roles: DataTypes.ARRAY(DataTypes.STRING),
     createdOn: DataTypes.TIME,
     lastLogin: DataTypes.TIME
   })

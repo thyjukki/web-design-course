@@ -4,7 +4,7 @@ services:
     container_name: sisu
     restart: unless-stopped
     user: "1000:1000"
-    links:
+    depends_on:
       - db
     volumes:
       - ./server/src:/home/node/app/src

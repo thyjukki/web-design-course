@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express"
-import * as db from "../db/db.js"
+import * as db from "../models/index.js"
 
 export const typeDefs = gql`
   type User {
@@ -20,7 +20,14 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    users: async () => db.users.findAll(),
-    user: async (obj, args, context, info) => db.users.findByPk(args.id)
+    users: async () => {
+      const rows = db.users.findAll()
+      console.log(rows);
+      return rows ? rows : []
+    },
+    user: async (obj, args, context, info) => {
+      const rows = db.users.findByPk(args.id)
+      return rows ? rows : {}
+    },
   }
 }
