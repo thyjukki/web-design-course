@@ -1,5 +1,16 @@
 version: "3.7"
 services:
+  client:
+    restart: unless-stopped
+    image: "client"
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    build:
+      context: ./client
+      dockerfile: ./Dockerfile
+    ports:
+      - "3456:3456"
   server:
     container_name: sisu
     restart: unless-stopped
@@ -23,7 +34,7 @@ services:
     container_name: sisu-db
     image: mysql
     restart: unless-stopped
-    environment: 
+    environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASS}
       - MYSQL_DATABASE=${MYSQL_DB}
     volumes:
@@ -31,4 +42,3 @@ services:
       - ./db/initdb.sql:/docker-entrypoint-initdb.d/initdb.sql
     ports:
       - ${MYSQL_PORT}:${MYSQL_PORT}
-
