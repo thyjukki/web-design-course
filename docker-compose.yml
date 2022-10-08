@@ -1,8 +1,15 @@
 version: "3.7"
 services:
   client:
+    container_name: sisu-client
     restart: unless-stopped
     image: "client"
+    env_file:
+      - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
     volumes:
       - ./client:/app
       - /app/node_modules
@@ -10,7 +17,7 @@ services:
       context: ./client
       dockerfile: ./Dockerfile
     ports:
-      - "3456:3456"
+      - "4000:4000"
   server:
     container_name: sisu
     restart: unless-stopped
@@ -23,6 +30,10 @@ services:
     network_mode: host
     env_file:
       - .env
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
     build:
       context: ./server
       dockerfile: ./Dockerfile

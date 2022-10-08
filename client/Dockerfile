@@ -1,11 +1,10 @@
+
 FROM node:16
 
-WORKDIR /app
+WORKDIR /home/node/app
 
-COPY package*.json /app/
+COPY --chown=node:node package*.json ./
+RUN npm i
+COPY . .
 
-RUN npm install
-
-COPY . /app
-
-CMD ["npm", "run", "dev"]
+CMD [ "npm", "start"]
