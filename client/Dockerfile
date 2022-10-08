@@ -3,8 +3,8 @@ FROM node:16
 
 WORKDIR /home/node/app
 
-COPY --chown=node:node package*.json ./
+COPY package*.json ./
 RUN npm i
 COPY . .
 
-CMD [ "npm", "start"]
+CMD [ "npm", "run", "dev"]
