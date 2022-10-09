@@ -17,6 +17,11 @@ module.exports = {
     },
     port: 3456,
   },
+  watchOptions: {
+    ignored: "/node_modules/",
+    aggregateTimeout: 500,
+    poll: 1000
+  },
   module: {
     rules: [
       {
