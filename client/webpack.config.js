@@ -1,5 +1,6 @@
-const webpack = require("webpack");
-const path = require("path");
+const webpack = require("webpack")
+const path = require("path")
+const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 module.exports = {
   entry: path.join(__dirname, "src", "index.js"),
@@ -9,6 +10,9 @@ module.exports = {
   devServer: {
     host: "0.0.0.0",
     allowedHosts: "all",
+    client: {
+      logging: "verbose"
+    },
     port: 3456,
   },
   module: {
@@ -33,5 +37,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [],
-};
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: path.join(__dirname, "public", "index.html"),
+    })
+  ],
+}
