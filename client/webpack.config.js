@@ -7,9 +7,11 @@ module.exports = {
   output: {
     path: path.join(__dirname, "dist"),
   },
+  target: "web",
   devServer: {
     host: "0.0.0.0",
     allowedHosts: "all",
+    watchFiles: ["src/**/*"],
     client: {
       logging: "verbose"
     },
