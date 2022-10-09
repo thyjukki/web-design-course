@@ -2,6 +2,7 @@
 build/
 rest/
 keys/
+dist/
 data/
 .env
 .vscode/
