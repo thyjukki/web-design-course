@@ -52,7 +52,7 @@ pipeline{
       steps {
           withCredentials([sshUserPrivateKey(credentialsId: 'sisu2-production-server', usernameVariable: 'SSH_USERNAME', keyFileVariable: 'SSH_KEY_PATH')]) {
           script {
-            def remote = [name: 'sshgateway', host: '192.168.2.1', user: SSH_USERNAME, allowAnyHosts: true, identityFile: SSH_KEY_PATH]
+            def remote = [name: 'sshgateway', host: '192.168.2.121', user: SSH_USERNAME, allowAnyHosts: true, identityFile: SSH_KEY_PATH]
             sshPut remote: remote, from: 'scripts/deploy-client.sh', into: '.'
             sshScript remote: remote, command './deploy-client.sh ${BUILD_NUMBER}'
           }
