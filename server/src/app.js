@@ -5,7 +5,7 @@ import morgan from "morgan"
 import bp from "body-parser"
 import { errorHandler } from "./middlewares/errors.js"
 import userRouter from "./routes/users.js"
-import { typeDefs, resolvers } from "./graphql/users.js"
+import { typeDefs, resolvers } from "./graphql/schema.js"
 
 const app = express()
 
