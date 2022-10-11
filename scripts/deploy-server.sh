@@ -3,7 +3,7 @@ set -e
 CNAME=sisu-server
 REPOSITORY=nexus.jukk.it
 CTAG=$REPOSITORY/sisu2/server
-PORTS=8080:3456
+PORTS=8081:8081
 
 if [ "$(docker ps -qa -f name=$CNAME)" ]; then
     echo ":: Found container - $CNAME"
