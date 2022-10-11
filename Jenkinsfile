@@ -31,11 +31,16 @@ pipeline{
       }
     }
     stage("Docker push") {
+      when {
+        branch 'main'
+      }
       steps {
         script {
           docker.withRegistry('https://nexus.jukk.it', 'nexus-jenkins-user' ) {
-            clientImage.push("${BUILD_NUMBER}")
-            serverImage.push("${BUILD_NUMBER}")
+            clientImage.push("${BUILD_NUMBER}")            
+            clientImage.push("latest") 
+            serverImage.push("${BUILD_NUMBER}") 
+            serverImage.push("latest") 
           }
         }
       }
