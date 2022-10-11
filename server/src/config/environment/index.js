@@ -3,6 +3,8 @@ import dotenv from "dotenv"
 dotenv.config()
 
 const port = process.env.BACKEND_PORT
+const dbHost = process.env.MYSQL_HOST
+const dbUser = process.env.MYSQL_USER
 const dbName = process.env.MYSQL_DB
 const dbPort = process.env.MYSQL_PORT
 const dbPass = process.env.MYSQL_ROOT_PASS
@@ -13,4 +15,4 @@ const env = {
   production: process.env.NODE_ENV === "production"
 }
 
-export { port, env, dbName, dbPort, dbPass }
+export { port, env, dbHost, dbName, dbPort, dbUser, dbPass }

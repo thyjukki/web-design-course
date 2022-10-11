@@ -1,8 +1,8 @@
 import Sequelize from "sequelize"
-import { dbName, dbPort, dbPass } from "../config/environment/index.js"
+import { dbHost, dbName, dbPort, dbUser, dbPass } from "../config/environment/index.js"
 
-export const sequelize = new Sequelize(dbName, "root", dbPass, {
-  host: "localhost",
+export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
+  host: dbHost,
   port: dbPort,
   dialect: "mysql",
   define: {

@@ -2,7 +2,7 @@
 set -e
 CNAME=sisu-server
 REPOSITORY=nexus.jukk.it
-CTAG=$REPOSITORY/sisu2/server
+CTAG=$REPOSITORY/sisu2/server:$1
 PORTS=8081:8081
 
 if [ "$(docker ps -qa -f name=$CNAME)" ]; then
@@ -17,6 +17,6 @@ fi
 
 echo Deploying server version $1
 docker login $REPOSITORY
-docker pull $CTAG:$1
+docker pull $CTAG
 
-docker run -d --name $CNAME --env-file /home/jukki/.env -p $PORTS $CTAG:test
+docker run -d --name $CNAME --env-file /home/jukki/.env -p $PORTS $CTAG
