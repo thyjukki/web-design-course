@@ -6,7 +6,7 @@ const FrontPage = () => {
   return (
     <div>
       <TopMenu />
-      Hello World!
+      Hello World! Updated!
     </div>
   )
 }
