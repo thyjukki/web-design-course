@@ -1,4 +1,3 @@
-import { User } from "./user.js"
 import Sequelize from "sequelize"
 import { sequelize } from "./index.js"
 
@@ -45,14 +44,10 @@ export const Event = sequelize.define("Event", {
   location: Sequelize.STRING
 })
 
-Course.hasMany(CourseInstance, {
-  foreignKey: "courseId"
-})
+Course.hasMany(CourseInstance)
 CourseInstance.belongsTo(Course)
 
-CourseInstance.hasMany(Event, {
-  foreignKey: "CourseInstanceId"
-})
+CourseInstance.hasMany(Event)
 Event.belongsTo(CourseInstance)
 
 // sync all models with the db

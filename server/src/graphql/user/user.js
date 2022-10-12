@@ -1,5 +1,5 @@
 import { gql } from "apollo-server-express"
-import * as db from "../models/index.js"
+import * as db from "../../models/index.js"
 
 export const typeDefs = gql`
   type User {
