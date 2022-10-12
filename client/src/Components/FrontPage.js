@@ -1,10 +1,6 @@
 import React from "react"
 import "./FrontPage.css"
 import TopMenu from "./TopMenu"
-import { useForm } from "react-hook-form"
-import { BrowserRouter } from "react-router-dom"
-
-const FooBar = "Test"
 
 const FrontPage = () => {
   return (
