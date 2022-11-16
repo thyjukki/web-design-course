@@ -8,9 +8,9 @@ import userRouter from "./routes/users.js"
 import { typeDefs, resolvers } from "./graphql/index.js"
 
 const app = express()
+app.disable("x-powered-by")
 
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms"))
-app.use(cors())
 app.use(bp.json())
 app.use(bp.urlencoded({ extended: true }))
 
