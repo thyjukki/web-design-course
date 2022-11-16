@@ -1,7 +1,9 @@
 import pkg from "lodash"
 const { merge } = pkg
-import { typeDefs as CourseDefs } from "./course/typedefs.js"
+import { typeDefs as courseDefs } from "./course/typedefs.js"
 import { resolvers as courseResolvers } from "./course/resolvers.js"
+import { typeDefs as userDefs } from "./user/typedefs.js"
+import { resolvers as userResolvers } from "./user/resolvers.js"
 
-export const typeDefs = [CourseDefs]
-export const resolvers = merge(courseResolvers)
+export const typeDefs = [courseDefs, userDefs]
+export const resolvers = merge(courseResolvers, userResolvers)

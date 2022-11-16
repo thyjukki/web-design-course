@@ -1,32 +1,32 @@
 import Sequelize from "sequelize"
-import { sequelize } from "./index.js"
+import { sequelize } from "../db/index.js"
+
+// Define user related tables with Sequelize
 
 export const User = sequelize.define("User", {
   id: {
-    type: Sequelize.INTEGER,
     autoIncrement: true,
+    type: Sequelize.INTEGER,
     primaryKey: true
   },
-  username: Sequelize.STRING,
+  username: {
+    unique: true,
+    type: Sequelize.STRING
+  },
+  email: {
+    unique: true,
+    type: Sequelize.STRING
+  },
   fullName: Sequelize.STRING,
   password: Sequelize.STRING,
-  email: Sequelize.STRING,
   createdOn: Sequelize.TIME,
   lastLogin: Sequelize.TIME
 })
 
 export const UserRole = sequelize.define("UserRole", {
   id: {
-    type: Sequelize.INTEGER,
-    autoIncrement: true,
+    type: Sequelize.UUID,
     primaryKey: true
   },
-  role: Sequelize.STRING,
+  role: Sequelize.STRING
 })
-
-User.hasMany(UserRole, {
-  foreignKey: "userId"
-})
-
-
-sequelize.sync()

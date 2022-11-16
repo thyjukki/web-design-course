@@ -1,5 +1,7 @@
 import Sequelize from "sequelize"
-import { sequelize } from "./index.js"
+import { sequelize } from "../db/index.js"
+
+// Define course related tables with Sequelize
 
 export const Course = sequelize.define("Course", {
   code: {
@@ -17,11 +19,19 @@ export const CourseInstance = sequelize.define("CourseInstance", {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
-  lecturer: Sequelize.STRING,
-  startDate: Sequelize.TIME,
-  endDate: Sequelize.TIME,
-  signupStart: Sequelize.TIME,
-  signupEnd: Sequelize.TIME
+  startDate: Sequelize.DATE,
+  endDate: Sequelize.DATE,
+  signupStart: Sequelize.DATE,
+  signupEnd: Sequelize.DATE,
+  courseCode: {
+    type: Sequelize.STRING,
+    references: {
+      model: {
+        tableName: "Course"
+      },
+      key: "code"
+    }
+  }
 })
 
 export const CourseEnrollment = sequelize.define("CourseEnrollment", {
@@ -29,26 +39,26 @@ export const CourseEnrollment = sequelize.define("CourseEnrollment", {
     autoIncrement: true,
     type: Sequelize.INTEGER,
     primaryKey: true
-  },
+  }
 })
 
-export const Event = sequelize.define("Event", {
+export const Occasion = sequelize.define("Occasion", {
   id: {
     autoIncrement: true,
     type: Sequelize.INTEGER,
     primaryKey: true
   },
   type: Sequelize.ENUM("Lecture", "Excercise", "Session", "Exam"),
-  startDate: Sequelize.TIME,
-  endDate: Sequelize.TIME,
-  location: Sequelize.STRING
+  startDate: Sequelize.DATE,
+  endDate: Sequelize.DATE,
+  location: Sequelize.STRING,
+  instanceId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "CourseInstance"
+      },
+      key: "id"
+    }
+  }
 })
-
-Course.hasMany(CourseInstance)
-CourseInstance.belongsTo(Course)
-
-CourseInstance.hasMany(Event)
-Event.belongsTo(CourseInstance)
-
-// sync all models with the db
-sequelize.sync()
