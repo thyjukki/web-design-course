@@ -13,4 +13,4 @@ CMD [ "npm", "run", "dev" ]
 FROM base as production
 # tänne productionjutut
 
-CMD [ "npm", "run", "build" ]
+CMD [ "npm", "run", "dev" ]
