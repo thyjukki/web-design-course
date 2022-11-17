@@ -1,4 +1,4 @@
-import { User, Course, CourseInstance, Occasion, StudyPlan } from "../../models/index.js"
+import { User, Course, CourseInstance, Occasion } from "../../models/index.js"
 import { GraphQLError } from "graphql"
 
 export const resolvers = {
@@ -57,15 +57,7 @@ export const resolvers = {
           as: "instanceId"
         }
       })
-    },
-    getStudyPlans: async () => {
-      return StudyPlan.findAll({
-        include: {
-          model: User,
-          as: "user"
-        }
-      })
-    },
+    }
   },
 
   Mutation: {
@@ -124,20 +116,6 @@ export const resolvers = {
       } catch (e) {
         return e
       }
-    },
-    createStudyPlan: async (_, args) => {
-      const user = await User.findOne({
-        where: { id: args.userId }
-      })
-      if (!user) {
-        throw new GraphQLError("User not found", {
-          extensions: {
-            code: "BAD_USER_INPUT"
-          }
-        })
-      }
-      console.log(args)
-      return StudyPlan.create(args)
-    },
+    }
   }
 }

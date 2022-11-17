@@ -30,12 +30,6 @@ export const typeDefs = gql`
     location: String
   }
 
-  type StudyPlan {
-    id: ID!
-    name: String!
-    user: User
-  }
-
   enum OccasionType {
     LECTURE
     EXCERCISE
@@ -49,7 +43,6 @@ export const typeDefs = gql`
     getCourseInstances: [CourseInstance]
     getCourseInstance(id: ID!): CourseInstance
     getOccasions: [Occasion]
-    getStudyPlans: [StudyPlan]
   }
 
   type Mutation {
@@ -82,12 +75,5 @@ export const typeDefs = gql`
     ): Occasion
 
     deleteOccasion(id: ID!): String
-
-    createStudyPlan(
-      name: String!
-      userId: ID!
-    ): StudyPlan
-
-    deleteStudyPlan(id: ID!): String
   }
 `

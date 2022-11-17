@@ -1,5 +1,9 @@
-import { StudyPlan } from "../../models/course.js"
-import { CourseInstance, User, UserRole } from "../../models/index.js"
+import {
+  CourseInstance,
+  User,
+  UserRole,
+  StudyPlan
+} from "../../models/index.js"
 
 export const resolvers = {
   Query: {
