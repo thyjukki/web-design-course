@@ -1,19 +1,27 @@
-import Sequelize from "sequelize"
-import { dbHost, dbName, dbPort, dbUser, dbPass } from "../config/environment/index.js"
+import { User, UserRole } from "./user.js"
+import { Course, CourseInstance, CourseEnrollment, Occasion, StudyPlan } from "./course.js"
+import { sequelize } from "../db/index.js"
 
-export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
-  host: dbHost,
-  port: dbPort,
-  dialect: "mysql",
-  define: {
-    freezeTableName: true
-  },
-  pool: {
-    max: 5,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  // <http://docs.sequelizejs.com/manual/tutorial/querying.html#operators>
-  operatorsAliases: false
+// Define relations between different tables
+
+User.hasMany(UserRole, { foreignKey: "userId", as: "roles" })
+UserRole.belongsTo(User, { foreignKey: "userId", as: "user" })
+
+User.hasMany(CourseInstance, {  foreignKey: "lecturerId", as: "lecturerIn" })
+CourseInstance.belongsTo(User, { foreignKey: "lecturerId", as: "lecturer" });
+
+User.hasMany(StudyPlan, {foreignKey: "userId", as: "studyPlans"})
+StudyPlan.belongsTo(User, {foreignKey: "userId", as: "user"})
+
+Course.hasMany(CourseInstance, { foreignKey: "courseCode", as: "instances" })
+CourseInstance.belongsTo(Course, {
+  foreignKey: "courseCode",
+  as: "parentCourse"
 })
+
+CourseInstance.hasMany(Occasion, { foreignKey: "instanceId", as: "occasions" })
+Occasion.belongsTo(CourseInstance, { foreignKey: "instanceId", as: "instance" })
+
+sequelize.sync()
+
+export { User, UserRole, Course, CourseInstance, CourseEnrollment, Occasion, StudyPlan }
