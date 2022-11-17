@@ -1,17 +1,10 @@
+import { StudyPlan } from "../../models/course.js"
 import { CourseInstance, User, UserRole } from "../../models/index.js"
 
 export const resolvers = {
   Query: {
     getUsers: async () => {
-      return await User.findAll({
-        include: {
-          model: UserRole,
-          as: "roles"
-        }
-      })
-    },
-    getUser: async (_, { id }) => {
-      return await User.findByPk(id, {
+      return User.findAll({
         include: [
           {
             model: UserRole,
@@ -20,6 +13,28 @@ export const resolvers = {
           {
             model: CourseInstance,
             as: "lecturerIn"
+          },
+          {
+            model: StudyPlan,
+            as: "studyPlans"
+          }
+        ]
+      })
+    },
+    getUser: async (_, { id }) => {
+      return User.findByPk(id, {
+        include: [
+          {
+            model: UserRole,
+            as: "roles"
+          },
+          {
+            model: CourseInstance,
+            as: "lecturerIn"
+          },
+          {
+            model: StudyPlan,
+            as: "studyPlans"
           }
         ]
       })

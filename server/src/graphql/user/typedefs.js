@@ -10,6 +10,7 @@ export const typeDefs = gql`
     email: String
     roles: [String]
     lecturerIn: [CourseInstance]
+    studyPlans: [StudyPlan]
     createdOn: String
     lastLogin: String
   }

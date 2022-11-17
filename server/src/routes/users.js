@@ -7,7 +7,6 @@ const router = Router()
 router.get("/", async (req, res) => {
   await sequelize.sync()
   const rows = await User.findAll()
-  console.log(rows)
   return rows ? rows : []
 })
 

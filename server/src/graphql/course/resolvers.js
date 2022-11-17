@@ -1,10 +1,10 @@
-import { User, Course, CourseInstance, Occasion } from "../../models/index.js"
+import { User, Course, CourseInstance, Occasion, StudyPlan } from "../../models/index.js"
 import { GraphQLError } from "graphql"
 
 export const resolvers = {
   Query: {
     getCourses: async () => {
-      return await Course.findAll({
+      return Course.findAll({
         include: {
           model: CourseInstance,
           as: "instances"
@@ -12,10 +12,10 @@ export const resolvers = {
       })
     },
     getCourse: async (_, { code }) => {
-      return await Course.findByPk(code)
+      return Course.findByPk(code)
     },
     getCourseInstances: async () => {
-      return await CourseInstance.findAll({
+      return CourseInstance.findAll({
         include: [
           {
             model: Course,
@@ -33,7 +33,7 @@ export const resolvers = {
       })
     },
     getCourseInstance: async (_, { id }) => {
-      return await CourseInstance.findByPk(id, {
+      return CourseInstance.findByPk(id, {
         include: [
           {
             model: Course,
@@ -51,13 +51,21 @@ export const resolvers = {
       })
     },
     getOccasions: async () => {
-      return await Occasion.findAll({
+      return Occasion.findAll({
         include: {
           model: CourseInstance,
           as: "instanceId"
         }
       })
-    }
+    },
+    getStudyPlans: async () => {
+      return StudyPlan.findAll({
+        include: {
+          model: User,
+          as: "user"
+        }
+      })
+    },
   },
 
   Mutation: {
@@ -116,6 +124,20 @@ export const resolvers = {
       } catch (e) {
         return e
       }
-    }
+    },
+    createStudyPlan: async (_, args) => {
+      const user = await User.findOne({
+        where: { id: args.userId }
+      })
+      if (!user) {
+        throw new GraphQLError("User not found", {
+          extensions: {
+            code: "BAD_USER_INPUT"
+          }
+        })
+      }
+      console.log(args)
+      return StudyPlan.create(args)
+    },
   }
 }
