@@ -12,6 +12,7 @@ services:
       - UMASK=002
     volumes:
       - ./client:/home/node/app:rw
+      - /home/node/app/node_modules
     build:
       context: ./client
       dockerfile: ./Dockerfile
@@ -28,7 +29,7 @@ services:
     volumes:
       - ./server/src:/home/node/app/src
       - ./server/nodemon.json:/home/node/app/nodemon.json
-    network_mode: host
+      - /home/node/app/node_modules
     env_file:
       - .env
     environment:
@@ -55,5 +56,5 @@ services:
       - ${MYSQL_PORT}:${MYSQL_PORT}
     healthcheck:
         test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASS' ]
-        timeout: 5s
+        timeout: 3s
         retries: 12
