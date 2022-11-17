@@ -2,44 +2,77 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Container, Button } from "react-bootstrap";
-import { getDay, previousMonday, nextSunday, addWeeks } from "date-fns";
+import {
+  getDay,
+  previousMonday,
+  nextTuesday,
+  nextWednesday,
+  nextThursday,
+  nextFriday,
+  nextSaturday,
+  nextSunday,
+  addWeeks,
+} from "date-fns";
 
 const Calendar = (props) => {
   const [weekOffset, setOffset] = useState(0);
 
   const current = new Date();
-  const date = `${
-    current.getMonth() + 1
-  }/${current.getDate()}/${current.getFullYear()}`;
+  const today = new Date(
+    addWeeks(
+      new Date(
+        `${
+          current.getMonth() + 1
+        }/${current.getDate()}/${current.getFullYear()}`
+      ),
+      weekOffset
+    )
+  );
+  const prevMon = new Date(previousMonday(today));
+  const tue = new Date(nextTuesday(prevMon));
+  const wed = new Date(nextWednesday(prevMon));
+  const thu = new Date(nextThursday(prevMon));
+  const fri = new Date(nextFriday(prevMon));
+  const sat = new Date(nextSaturday(prevMon));
+  const nextSun = new Date(nextSunday(today));
 
   const getWeek = () => {
-    const today = new Date(addWeeks(new Date(date), weekOffset));
     const dayNumber = getDay(today);
     if (dayNumber === 0) {
-      const mon = new Date(previousMonday(today));
-      return `${mon.getDate()}.${mon.getMonth()+1}-${today.getDate()}.${today.getMonth()+1}.${today.getFullYear()}`;
+      console.log("SUNNUNTAI!");
+      return `${prevMon.getDate()}.${
+        prevMon.getMonth() + 1
+      }-${today.getDate()}.${today.getMonth() + 1}.${today.getFullYear()}`;
     } else if (dayNumber === 1) {
-      const sun = new Date(nextSunday(today));
-      return `${today.getDate()}.${today.getMonth()+1}-${sun.getDate()}.${sun.getMonth()+1}.${sun.getFullYear()}`;
+      console.log("MAANANTAI!");
+      return `${today.getDate()}.${today.getMonth() + 1}-${nextSun.getDate()}.${
+        nextSun.getMonth() + 1
+      }.${nextSun.getFullYear()}`;
     } else {
-      const mon = new Date(previousMonday(today));
-      const sun = new Date(nextSunday(today));
-      console.log(sun)
-      return `${mon.getDate()}.${mon.getMonth()+1}-${sun.getDate()}.${sun.getMonth()+1}.${sun.getFullYear()}`;
+      return `${prevMon.getDate()}.${
+        prevMon.getMonth() + 1
+      }-${nextSun.getDate()}.${
+        nextSun.getMonth() + 1
+      }.${nextSun.getFullYear()}`;
     }
   };
 
   return (
     <Container>
       <Header>
-        <Button onClick={() => setOffset(weekOffset - 1)} >Vähennä</Button>
+        <Button onClick={() => setOffset(weekOffset - 1)}>Vähennä</Button>
         <div>{getWeek()}</div>
         <Button onClick={() => setOffset(weekOffset + 1)}>Lisää</Button>
       </Header>
       <Canvas>
         <Week>
-          <Day />
-          <Day />
+          <Day date={`ma ${prevMon.getDate()}.${prevMon.getMonth() + 1}`} />
+          <Day date={`ti ${tue.getDate()}.${tue.getMonth() + 1}`} />
+          <Day date={`ke ${wed.getDate()}.${wed.getMonth() + 1}`} />
+          <Day date={`to ${thu.getDate()}.${thu.getMonth() + 1}`} />
+          <Day date={`pe ${fri.getDate()}.${fri.getMonth() + 1}`} />
+          <Day date={`la ${sat.getDate()}.${sat.getMonth() + 1}`} />
+          <Day date={`su ${nextSun.getDate()}.${nextSun.getMonth() + 1}`} />
         </Week>
       </Canvas>
     </Container>
@@ -47,7 +80,8 @@ const Calendar = (props) => {
 };
 
 const Day = (props) => {
-  return <div>Hello</div>;
+  const { date } = props;
+  return <div>{date}</div>;
 };
 
 const Header = styled.div`
