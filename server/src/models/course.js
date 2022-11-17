@@ -62,12 +62,3 @@ export const Occasion = sequelize.define("Occasion", {
     }
   }
 })
-
-export const StudyPlan = sequelize.define("StudyPlan", {
-  id: {
-    autoIncrement: true,
-    type: Sequelize.INTEGER,
-    primaryKey: true
-  },
-  name: Sequelize.STRING
-})
