@@ -24,7 +24,11 @@ await apollo.start()
 apollo.applyMiddleware({
   app,
   cors: {
-    origin: "https://studio.apollographql.com"
+    origin: [
+      "https://sisu.jukk.it",
+      `http://localhost:${process.env.FRONTEND_PORT}`,
+      "https://studio.apollographql.com"
+    ]
   },
   path: "/graphql"
 })
