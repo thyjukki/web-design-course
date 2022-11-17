@@ -83,23 +83,19 @@ export const resolvers = {
         })
       }
 
-      return studyPlan
-        .update(
-          { baseBlockId: baseBlock.id },
+      await studyPlan.update({ baseBlockId: baseBlock.id })
+      return studyPlan.reload({
+        include: [
           {
-            include: [
-              {
-                model: StudyPlanBlock,
-                as: "baseBlock"
-              },
-              {
-                model: User,
-                as: "user"
-              }
-            ]
+            model: StudyPlanBlock,
+            as: "baseBlock"
+          },
+          {
+            model: User,
+            as: "user"
           }
-        )
-        .reload()
+        ]
+      })
     }
   }
 }
