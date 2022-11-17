@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap"
 
 const Course = (props) => {
   const { course, courseInstance } = props
-  console.log(courseInstance)
+
   return (
     <Container>
       <Accordion defaultActiveKey="0">

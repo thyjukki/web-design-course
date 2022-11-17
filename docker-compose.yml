@@ -15,7 +15,6 @@ services:
       - CHOKIDAR_USEPOLLING=1
     volumes:
       - ./client:/home/node/app:rw
-      - /home/node/app/node_modules
     build:
       context: ./client
       dockerfile: ./Dockerfile
