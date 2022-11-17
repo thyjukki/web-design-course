@@ -11,6 +11,7 @@ const connection = await mysql.createConnection({
 await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`)
 
 export const sequelize = new Sequelize(dbName, "root", dbPass, {
+  host: dbHost,
   dialect: "mysql",
   logging: true,
   define: {
