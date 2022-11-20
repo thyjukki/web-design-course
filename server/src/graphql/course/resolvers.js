@@ -1,4 +1,4 @@
-import { User, Course, CourseInstance, Occasion } from "../../models/index.js"
+import { User, Course, CourseInstance, CourseEnrollment, Occasion, StudyPlanBlock } from "../../models/index.js"
 import { GraphQLError } from "graphql"
 
 export const resolvers = {
@@ -57,7 +57,25 @@ export const resolvers = {
           as: "instanceId"
         }
       })
-    }
+    },
+    getCourseEnrollment: async (_, { id }) => {
+      return CourseEnrollment.findByPk(id, {
+        include: [
+          {
+            model: CourseInstance,
+            as: "instance"
+          },
+          {
+            model: User,
+            as: "user"
+          },
+          {
+            model: StudyPlanBlock,
+            as: "studyPlanBlock"
+          }
+        ]
+      })
+    },
   },
 
   Mutation: {

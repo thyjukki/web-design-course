@@ -49,6 +49,8 @@ export const typeDefs = gql`
     getCourse(code: String!): Course
     getCourseInstances: [CourseInstance]
     getCourseInstance(id: ID!): CourseInstance
+    getCourseEnrollment(id: ID!): CourseEnrollment
+    getCourseEnrollments(user: ID, instance: ID, block: ID): [CourseEnrollment]
     getOccasions: [Occasion]
   }
 

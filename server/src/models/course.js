@@ -19,6 +19,15 @@ export const CourseInstance = sequelize.define("CourseInstance", {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
+  lecturerId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "User"
+      },
+      key: "id"
+    }
+  },
   startDate: Sequelize.DATE,
   endDate: Sequelize.DATE,
   signupStart: Sequelize.DATE,

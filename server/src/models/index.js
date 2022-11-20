@@ -17,10 +17,17 @@ StudyPlan.belongsTo(User, { foreignKey: "userId", as: "user" })
 User.hasMany(CourseEnrollment, { foreignKey: "userId", as: "enrolments" })
 CourseEnrollment.belongsTo(User, { foreignKey: "userId", as: "user" })
 
+CourseInstance.hasMany(CourseEnrollment, { foreignKey: "instanceId", as: "enrollments" })
+CourseEnrollment.belongsTo(CourseInstance, { foreignKey: "instanceId", as: "instance" })
+
+StudyPlanBlock.hasMany(CourseEnrollment, { foreignKey: "blockId", as: "enrollments" })
+CourseEnrollment.belongsTo(StudyPlanBlock, { foreignKey: "blockId", as: "studyPlanBlock" })
+
 StudyPlan.belongsTo(StudyPlanBlock, {
   foreignKey: "baseBlockId",
   as: "baseBlock"
 })
+
 
 StudyPlanBlock.hasMany(StudyPlanBlock, {
   foreignKey: { name: "parentId", allowNull: true },
@@ -39,9 +46,6 @@ CourseInstance.belongsTo(Course, {
 
 CourseInstance.hasMany(Occasion, { foreignKey: "instanceId", as: "occasions" })
 Occasion.belongsTo(CourseInstance, { foreignKey: "instanceId", as: "instance" })
-
-StudyPlanBlock.hasMany(CourseEnrollment, { foreignKey: "blockId", as: "enrollments" })
-CourseEnrollment.belongsTo(StudyPlanBlock, { foreignKey: "blockId", as: "studyPlanBlock" })
 
 sequelize.sync()
 
