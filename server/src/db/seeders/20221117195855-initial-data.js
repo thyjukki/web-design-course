@@ -93,6 +93,27 @@ module.exports = {
         updatedAt: now
       }
     ])
+
+    await queryInterface.bulkInsert("CourseEnrollment", [
+      {
+        userId: 1,
+        instanceId: 1,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 1,
+        instanceId: 2,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 2,
+        instanceId: 1,
+        createdAt: now,
+        updatedAt: now
+      }
+    ])
   },
 
   async down(queryInterface, Sequelize) {
