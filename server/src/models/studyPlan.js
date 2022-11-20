@@ -16,6 +16,15 @@ export const StudyPlan = sequelize.define("StudyPlan", {
       },
       key: "id"
     }
+  },
+  userId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "StudyPlanBlock"
+      },
+      key: "id"
+    }
   }
 })
 

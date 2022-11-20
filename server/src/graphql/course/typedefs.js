@@ -25,7 +25,7 @@ export const typeDefs = gql`
     id: ID!
     user: User!
     instance: CourseInstance!
-    block: StudyPlanBlock
+    studyPlanBlock: StudyPlanBlock
   }
 
   type Occasion {
@@ -84,5 +84,15 @@ export const typeDefs = gql`
     ): Occasion
 
     deleteOccasion(id: ID!): String
+
+    createCourseEnrollment(
+      userId: ID!
+      instanceId: ID!
+      blockId: ID
+    ): CourseEnrollment
+    
+    updateCourseEnrollment(id: ID!, blockId: ID!): CourseEnrollment
+
+    deleteCourseEnrollment(id: ID!): String
   }
 `
