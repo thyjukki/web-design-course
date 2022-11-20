@@ -4,6 +4,8 @@ services:
     container_name: sisu-client
     restart: unless-stopped
     image: "client"
+    depends_on:
+      - server
     env_file:
       - .env
     environment:
@@ -18,7 +20,7 @@ services:
       dockerfile: ./Dockerfile
       target: base
     ports:
-      - ${PORT}:${PORT}
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
   server:
     container_name: sisu
     restart: unless-stopped
@@ -55,6 +57,16 @@ services:
     ports:
       - ${MYSQL_PORT}:${MYSQL_PORT}
     healthcheck:
-        test: ["CMD", 'mysqladmin', 'ping', '-h', 'localhost', '-u', 'root', '-p$$MYSQL_ROOT_PASS' ]
-        timeout: 3s
-        retries: 12
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-u",
+          "root",
+          "-p$$MYSQL_ROOT_PASS",
+        ]
+      timeout: 3s
+      retries: 12
