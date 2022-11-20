@@ -58,7 +58,14 @@ export const resolvers = {
         }
       }
       console.log(args)
-      return StudyPlanBlock.create(args)
+      return StudyPlanBlock.create(args, {
+        include: [
+          {
+            model: StudyPlanBlock,
+            as: "parent"
+          }
+        ]
+      })
     },
     updateStudyPlanBaseBlock: async (_, { studyPlanId, baseBlockId }) => {
       const baseBlock = await StudyPlanBlock.findOne({

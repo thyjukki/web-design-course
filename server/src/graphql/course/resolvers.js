@@ -1,4 +1,4 @@
-import { User, Course, CourseInstance, Occasion } from "../../models/index.js"
+import { User, Course, CourseInstance, CourseEnrollment, Occasion, StudyPlanBlock } from "../../models/index.js"
 import { GraphQLError } from "graphql"
 
 export const resolvers = {
@@ -57,7 +57,56 @@ export const resolvers = {
           as: "instanceId"
         }
       })
-    }
+    },
+    getCourseEnrollment: async (_, { id }) => {
+      var enrolment = await CourseEnrollment.findByPk(id, {
+        include: [
+          {
+            model: CourseInstance,
+            as: "instance"
+          },
+          {
+            model: User,
+            as: "user"
+          },
+          {
+            model: StudyPlanBlock,
+            as: "studyPlanBlock"
+          }
+        ]
+      })
+      console.log(enrolment)
+      return enrolment
+    },
+    getCourseEnrollments: async (_, args) => {
+      var whereBuilder = {}
+      if (args.user) {
+        whereBuilder['userId'] = args.user;
+      }
+      if (args.instance) {
+        whereBuilder['instanceId'] = args.instance;
+      }
+      if (args.block) {
+        whereBuilder['blockId'] = args.block;
+      }
+      return CourseEnrollment.findAll({
+        include: [
+          {
+            model: CourseInstance,
+            as: "instance"
+          },
+          {
+            model: User,
+            as: "user"
+          },
+          {
+            model: StudyPlanBlock,
+            as: "studyPlanBlock"
+          }
+        ],
+        where: whereBuilder
+      })
+    },
   },
 
   Mutation: {
@@ -112,6 +161,61 @@ export const resolvers = {
         Occasion.destroy({ where: { id } })
         return `Occasion ${id} deleted`
       } catch (e) {
+        return e
+      }
+    },
+    createCourseEnrollment: async (_, args) => {
+      const enrolment = await CourseEnrollment.create(args)
+      return enrolment.reload({include: { all: true }})
+    },
+    updateCourseEnrollment: async (_, { id, blockId }) => {
+      const enrolment = await CourseEnrollment.findOne({
+        where: { id: id }
+      })
+      const studyPlanBlock = await StudyPlanBlock.findOne({
+        where: { id: blockId }
+      })
+
+      if (!enrolment) {
+        throw new GraphQLError("Enrollment not found!", {
+          extensions: {
+            code: "BAD_USER_INPUT"
+          }
+        })
+      }
+      if (!studyPlanBlock) {
+        throw new GraphQLError("Study plan block not found", {
+          extensions: {
+            code: "BAD_USER_INPUT"
+          }
+        })
+      }
+
+      await enrolment.update({ blockId: studyPlanBlock.id })
+      return enrolment.reload({
+        include: [
+          {
+            model: StudyPlanBlock,
+            as: "studyPlanBlock"
+          },
+          {
+            model: User,
+            as: "user"
+          },
+          {
+            model: CourseInstance,
+            as: "instance"
+          }
+        ]
+      })
+    },
+    deleteCourseEnrollment: async (_, { id }) => {
+      try {
+        console.log(id)
+        CourseEnrollment.destroy({ where: { id } })
+        return `CourseEnrollment ${id} deleted`
+      } catch (e) {
+        console.log(e)
         return e
       }
     }

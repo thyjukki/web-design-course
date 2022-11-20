@@ -19,6 +19,15 @@ export const CourseInstance = sequelize.define("CourseInstance", {
     type: Sequelize.INTEGER,
     primaryKey: true
   },
+  lecturerId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "User"
+      },
+      key: "id"
+    }
+  },
   startDate: Sequelize.DATE,
   endDate: Sequelize.DATE,
   signupStart: Sequelize.DATE,
@@ -39,6 +48,33 @@ export const CourseEnrollment = sequelize.define("CourseEnrollment", {
     autoIncrement: true,
     type: Sequelize.INTEGER,
     primaryKey: true
+  },
+  userId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "User"
+      },
+      key: "id"
+    }
+  },
+  instanceId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "CourseInstance"
+      },
+      key: "id"
+    }
+  },
+  blockId: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: {
+        tableName: "StudyPlanBlock"
+      },
+      key: "id"
+    }
   }
 })
 

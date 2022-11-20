@@ -93,6 +93,57 @@ module.exports = {
         updatedAt: now
       }
     ])
+
+    await queryInterface.bulkInsert("StudyPlanBlock", [
+      {
+        name: "Tietotekniikan kandiohjelma",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        name: "Pakolliset kurssit",
+        parentId: 1,
+        createdAt: now,
+        updatedAt: now
+      }
+    ])
+    await queryInterface.bulkInsert("StudyPlan", [
+      {
+        name: "Jussin Kandi",
+        baseBlockId: 1,
+        userId: 2,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        name: "Lassin Kandi",
+        userId: 1,
+        createdAt: now,
+        updatedAt: now
+      }
+    ])
+
+    await queryInterface.bulkInsert("CourseEnrollment", [
+      {
+        userId: 1,
+        instanceId: 1,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 2,
+        instanceId: 2,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 2,
+        instanceId: 1,
+        blockId: 2,
+        createdAt: now,
+        updatedAt: now
+      }
+    ])
   },
 
   async down(queryInterface, Sequelize) {
