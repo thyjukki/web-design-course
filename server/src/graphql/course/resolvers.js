@@ -84,7 +84,6 @@ export const resolvers = {
         })
       }
       args.lecturerId = lecturer.id
-      console.log(args)
       return CourseInstance.create(args)
     },
     deleteCourseInstance: async (_, { id }) => {
@@ -106,7 +105,6 @@ export const resolvers = {
           }
         })
       }
-      console.log(args)
       return Occasion.create(args)
     },
     deleteOccasion: async (_, { id }) => {
