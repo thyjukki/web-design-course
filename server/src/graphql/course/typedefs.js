@@ -21,6 +21,13 @@ export const typeDefs = gql`
     occasions: [Occasion]
   }
 
+  type CourseEnrollment {
+    id: ID!
+    user: User!
+    instance: CourseInstance!
+    block: StudyPlanBlock
+  }
+
   type Occasion {
     id: ID!
     instanceId: ID!
