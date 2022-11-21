@@ -7,7 +7,8 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 module.exports = {
   entry: path.join(__dirname, "src", "index.js"),
   output: {
-    path: path.join(__dirname, "dist")
+    path: path.join(__dirname, "dist"),
+    publicPath: "/"
   },
   target: "web",
   devServer: {
@@ -17,7 +18,8 @@ module.exports = {
     client: {
       logging: "verbose"
     },
-    port: 3456
+    port: 3456,
+    historyApiFallback: true
   },
   watchOptions: {
     ignored: "/node_modules/",
