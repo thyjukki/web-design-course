@@ -89,12 +89,37 @@ export const resolvers = {
         ]
       })
     },
-    getOccasions: async () => {
+    getOccasions: async (_, args) => {
+      var whereBuilder = {}
+      if (args.instance) {
+        whereBuilder["instanceId"] = args.instance
+      }
       return Occasion.findAll({
-        include: {
-          model: CourseInstance,
-          as: "instanceId"
-        }
+        include: { all: true },
+        where: whereBuilder
+      })
+    },
+    getOccasionsForUser: async (_, args) => {
+      var whereBuilder = {}
+      if (args.instance) {
+        whereBuilder["instanceId"] = args.instance
+      }
+
+      return Occasion.findAll({
+        where: whereBuilder,
+        include: [
+          {
+            model: CourseEnrollment,
+            as: "enrollments",
+            where: { userId: args.user },
+            include: { all: true }
+          },
+          {
+            model: CourseInstance,
+            as: "instance",
+            include: { all: true }
+          }
+        ]
       })
     },
     getCourseEnrollment: async (_, { id }) => {
@@ -193,7 +218,8 @@ export const resolvers = {
           }
         })
       }
-      return Occasion.create(args)
+      const occasion = await Occasion.create(args)
+      return occasion.reload({ include: { all: true } })
     },
     deleteOccasion: async (_, { id }) => {
       try {
