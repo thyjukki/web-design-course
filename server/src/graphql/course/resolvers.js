@@ -218,7 +218,7 @@ export const resolvers = {
           }
         })
       }
-      const occasion = Occasion.create(args)
+      const occasion = await Occasion.create(args)
       return occasion.reload({ include: { all: true } })
     },
     deleteOccasion: async (_, { id }) => {
