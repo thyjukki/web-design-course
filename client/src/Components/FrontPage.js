@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import "./FrontPage.css"
-import TopMenu from "./TopMenu"
 import Course from "./common/Course"
 import { gql, useQuery } from "@apollo/client"
 
@@ -19,7 +18,6 @@ const FrontPage = () => {
   data && console.log(data)
   return (
     <div>
-      <TopMenu />
       Hello World!
       {loading && <p>Loading</p>}
       {error && <p>Error: {error.message}</p>}

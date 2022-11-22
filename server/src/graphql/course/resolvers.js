@@ -1,5 +1,13 @@
-import { User, Course, CourseInstance, CourseEnrollment, Occasion, StudyPlanBlock } from "../../models/index.js"
+import {
+  User,
+  Course,
+  CourseInstance,
+  CourseEnrollment,
+  Occasion,
+  StudyPlanBlock
+} from "../../models/index.js"
 import { GraphQLError } from "graphql"
+import { Op } from "sequelize"
 
 export const resolvers = {
   Query: {
@@ -13,6 +21,37 @@ export const resolvers = {
     },
     getCourse: async (_, { code }) => {
       return Course.findByPk(code)
+    },
+    searchCourses: async (_, { word }) => {
+      console.log(word)
+      return Course.findAll({
+        where: {
+          [Op.or]: [
+            {
+              name: {
+                [Op.like]: "%" + word + "%"
+              }
+            },
+            {
+              code: {
+                [Op.like]: "%" + word + "%"
+              }
+            }
+          ]
+        },
+        include: [
+          {
+            model: CourseInstance,
+            as: "instances",
+            include: [
+              {
+                model: User,
+                as: "lecturer"
+              }
+            ]
+          }
+        ]
+      })
     },
     getCourseInstances: async () => {
       return CourseInstance.findAll({
@@ -81,13 +120,13 @@ export const resolvers = {
     getCourseEnrollments: async (_, args) => {
       var whereBuilder = {}
       if (args.user) {
-        whereBuilder['userId'] = args.user;
+        whereBuilder["userId"] = args.user
       }
       if (args.instance) {
-        whereBuilder['instanceId'] = args.instance;
+        whereBuilder["instanceId"] = args.instance
       }
       if (args.block) {
-        whereBuilder['blockId'] = args.block;
+        whereBuilder["blockId"] = args.block
       }
       return CourseEnrollment.findAll({
         include: [
@@ -106,7 +145,7 @@ export const resolvers = {
         ],
         where: whereBuilder
       })
-    },
+    }
   },
 
   Mutation: {
@@ -166,7 +205,7 @@ export const resolvers = {
     },
     createCourseEnrollment: async (_, args) => {
       const enrolment = await CourseEnrollment.create(args)
-      return enrolment.reload({include: { all: true }})
+      return enrolment.reload({ include: { all: true } })
     },
     updateCourseEnrollment: async (_, { id, blockId }) => {
       const enrolment = await CourseEnrollment.findOne({

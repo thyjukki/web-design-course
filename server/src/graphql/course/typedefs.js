@@ -47,6 +47,7 @@ export const typeDefs = gql`
   type Query {
     getCourses: [Course]
     getCourse(code: String!): Course
+    searchCourses(word: String!): [Course]
     getCourseInstances: [CourseInstance]
     getCourseInstance(id: ID!): CourseInstance
     getCourseEnrollment(id: ID!): CourseEnrollment
@@ -90,7 +91,7 @@ export const typeDefs = gql`
       instanceId: ID!
       blockId: ID
     ): CourseEnrollment
-    
+
     updateCourseEnrollment(id: ID!, blockId: ID!): CourseEnrollment
 
     deleteCourseEnrollment(id: ID!): String
