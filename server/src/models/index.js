@@ -58,6 +58,15 @@ CourseInstance.belongsTo(Course, {
 CourseInstance.hasMany(Occasion, { foreignKey: "instanceId", as: "occasions" })
 Occasion.belongsTo(CourseInstance, { foreignKey: "instanceId", as: "instance" })
 
+CourseEnrollment.hasMany(Occasion, {
+  foreignKey: "instanceId",
+  as: "occasions"
+})
+Occasion.hasMany(CourseEnrollment, {
+  foreignKey: "instanceId",
+  as: "enrollments"
+})
+
 sequelize.sync()
 
 export {

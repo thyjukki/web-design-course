@@ -30,8 +30,9 @@ export const typeDefs = gql`
 
   type Occasion {
     id: ID!
-    instanceId: ID!
+    instance: CourseInstance!
     type: OccasionType
+    enrollments: [CourseEnrollment]
     startDate: String
     endDate: String
     location: String
@@ -52,7 +53,8 @@ export const typeDefs = gql`
     getCourseInstance(id: ID!): CourseInstance
     getCourseEnrollment(id: ID!): CourseEnrollment
     getCourseEnrollments(user: ID, instance: ID, block: ID): [CourseEnrollment]
-    getOccasions: [Occasion]
+    getOccasions(instance: ID): [Occasion]
+    getOccasionsForUser(user: ID, instance: ID): [Occasion]
   }
 
   type Mutation {
