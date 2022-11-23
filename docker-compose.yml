@@ -70,5 +70,5 @@ services:
           "-p$$MYSQL_ROOT_PASS",
         ]
       timeout: 3s
-      interval: 5s
+      interval: 1s
       retries: 12

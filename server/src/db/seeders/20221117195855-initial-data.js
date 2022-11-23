@@ -95,7 +95,6 @@ module.exports = {
       }
     ])
 
-
     await queryInterface.bulkInsert("Occasion", [
       {
         instanceId: 1,
@@ -150,7 +149,7 @@ module.exports = {
         type: "Session",
         createdAt: now,
         updatedAt: now
-      },
+      }
     ])
 
     await queryInterface.bulkInsert("StudyPlanBlock", [

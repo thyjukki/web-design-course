@@ -1,5 +1,4 @@
 import { ApolloServer } from "apollo-server-express"
-import cors from "cors"
 import express from "express"
 import morgan from "morgan"
 import bp from "body-parser"

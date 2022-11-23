@@ -1,5 +1,4 @@
 import React from "react"
-import "./FrontPage.css"
 import Course from "./common/Course"
 import { gql, useQuery } from "@apollo/client"
 

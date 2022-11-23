@@ -23,10 +23,11 @@
     "mysql2": "^2.3.3",
     "sequelize": "^6.23.0",
     "graphql-shield": "^7.6.5",
-    "graphql-middleware": "^6.1.33"
+    "graphql-middleware": "^6.1.33",
+    "sequelize-cli": "^6.5.2"
   },
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "/bin/bash start.sh"
   },
   "devDependencies": {
     "eslint": "^8.21.0",
