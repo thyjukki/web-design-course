@@ -5,6 +5,8 @@ import {
   StudyPlan
 } from "../../models/index.js"
 
+import { login } from "./mutations/index.js"
+
 export const resolvers = {
   Query: {
     getUsers: async () => {
@@ -55,6 +57,7 @@ export const resolvers = {
       } catch (e) {
         return e
       }
-    }
+    },
+    login
   }
 }

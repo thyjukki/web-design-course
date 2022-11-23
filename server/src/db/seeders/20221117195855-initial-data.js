@@ -1,5 +1,6 @@
 "use strict"
 
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -18,7 +19,7 @@ module.exports = {
         username: "laaden",
         fullName: "Lassi Knuuttila",
         email: "lassi@lassi.fi",
-        password: "test",
+        password: "$argon2id$v=19$m=16,t=2,p=1$dGVzdHRlc3Q$aME57ODlq+maIRv0ouzcLA",
         createdAt: now,
         updatedAt: now
       },
@@ -26,7 +27,7 @@ module.exports = {
         username: "jukki",
         fullName: "Jussi Wahtlström",
         email: "jussi@jussi.fi",
-        password: "test",
+        password: "$argon2id$v=19$m=16,t=2,p=1$dGVzdHRlc3Q$aME57ODlq+maIRv0ouzcLA",
         createdAt: now,
         updatedAt: now
       },
@@ -34,7 +35,7 @@ module.exports = {
         username: "aatos",
         fullName: "Aatos Saarinen",
         email: "aatos@aatos.fi",
-        password: "test",
+        password: "$argon2id$v=19$m=16,t=2,p=1$dGVzdHRlc3Q$aME57ODlq+maIRv0ouzcLA",
         createdAt: now,
         updatedAt: now
       }

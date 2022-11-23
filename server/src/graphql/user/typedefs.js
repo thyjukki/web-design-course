@@ -7,6 +7,7 @@ export const typeDefs = gql`
     username: String!
     fullName: String
     password: String
+    token: String
     email: String
     roles: [String]
     lecturerIn: [CourseInstance]
@@ -15,10 +16,16 @@ export const typeDefs = gql`
     lastLogin: String
   }
 
+  input userInput {
+    username: String!
+    password: String!
+  }
+
   type Query {
     getUsers: [User]
     getUser(id: ID!): User
   }
+  
 
   type Mutation {
     register(
@@ -27,6 +34,8 @@ export const typeDefs = gql`
       password: String!
       fullName: String
     ): User
+
+    login(input: userInput): User
 
     deleteUser(id: ID!): String
   }
