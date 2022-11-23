@@ -94,6 +94,64 @@ module.exports = {
       }
     ])
 
+
+    await queryInterface.bulkInsert("Occasion", [
+      {
+        instanceId: 1,
+        startDate: new Date("05 October 2022"),
+        endDate: new Date("30 November 2022"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("1 December 2022"),
+        endDate: new Date("30 December 2022"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("05 October 2022"),
+        endDate: new Date("30 November 2022"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("05 October 2022"),
+        endDate: new Date("30 November 2022"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("1 December 2022"),
+        endDate: new Date("1 December 2022"),
+        location: "T2",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("01 October 2022"),
+        endDate: new Date("15 November 2022"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+    ])
+
     await queryInterface.bulkInsert("StudyPlanBlock", [
       {
         name: "Tietotekniikan kandiohjelma",
