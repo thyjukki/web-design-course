@@ -1,6 +1,5 @@
 "use strict"
 
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -13,13 +12,19 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
+    const jwt = require("jsonwebtoken")
     const now = new Date()
+    const passwords = ["salasana", "password", "hunter2"]
+    const hashedPasswords = await Promise.all(
+      passwords.map((passwd) => jwt.sign(passwd, process.env.TOKEN_KEY))
+    )
+
     await queryInterface.bulkInsert("User", [
       {
         username: "laaden",
         fullName: "Lassi Knuuttila",
         email: "lassi@lassi.fi",
-        password: "$argon2id$v=19$m=16,t=2,p=1$dGVzdHRlc3Q$aME57ODlq+maIRv0ouzcLA",
+        password: hashedPasswords[0],
         createdAt: now,
         updatedAt: now
       },
@@ -27,7 +32,7 @@ module.exports = {
         username: "jukki",
         fullName: "Jussi Wahtlström",
         email: "jussi@jussi.fi",
-        password: "$argon2id$v=19$m=16,t=2,p=1$dGVzdHRlc3Q$aME57ODlq+maIRv0ouzcLA",
+        password: hashedPasswords[1],
         createdAt: now,
         updatedAt: now
       },
@@ -35,7 +40,7 @@ module.exports = {
         username: "aatos",
         fullName: "Aatos Saarinen",
         email: "aatos@aatos.fi",
-        password: "$argon2id$v=19$m=16,t=2,p=1$dGVzdHRlc3Q$aME57ODlq+maIRv0ouzcLA",
+        password: hashedPasswords[2],
         createdAt: now,
         updatedAt: now
       }
@@ -74,6 +79,8 @@ module.exports = {
         courseCode: "CS-101",
         startDate: new Date("05 October 2022"),
         endDate: new Date("30 November 2022"),
+        signupStart: new Date("01 October 2022"),
+        signupEnd: new Date("06 October 2022"),
         createdAt: now,
         updatedAt: now
       },
@@ -82,6 +89,8 @@ module.exports = {
         courseCode: "CS-102",
         startDate: new Date("24 December 2022"),
         endDate: new Date("31 December 2022"),
+        signupStart: new Date("05 December 2022"),
+        signupEnd: new Date("25 December 2022"),
         createdAt: now,
         updatedAt: now
       },
@@ -90,63 +99,8 @@ module.exports = {
         courseCode: "TU-101",
         startDate: new Date("01 January 2023"),
         endDate: new Date("31 December 2023"),
-        createdAt: now,
-        updatedAt: now
-      }
-    ])
-
-    await queryInterface.bulkInsert("Occasion", [
-      {
-        instanceId: 1,
-        startDate: new Date("05 October 2022"),
-        endDate: new Date("30 November 2022"),
-        location: "T1",
-        type: "Lecture",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 1,
-        startDate: new Date("1 December 2022"),
-        endDate: new Date("30 December 2022"),
-        location: "T2",
-        type: "Lecture",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 2,
-        startDate: new Date("05 October 2022"),
-        endDate: new Date("30 November 2022"),
-        location: "T2",
-        type: "Lecture",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 2,
-        startDate: new Date("05 October 2022"),
-        endDate: new Date("30 November 2022"),
-        location: "A101",
-        type: "Excercise",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 2,
-        startDate: new Date("1 December 2022"),
-        endDate: new Date("1 December 2022"),
-        location: "T2",
-        type: "Exam",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 3,
-        startDate: new Date("01 October 2022"),
-        endDate: new Date("15 November 2022"),
-        location: "U420",
-        type: "Session",
+        signupStart: new Date("01 January 2022"),
+        signupEnd: new Date("06 January 2022"),
         createdAt: now,
         updatedAt: now
       }

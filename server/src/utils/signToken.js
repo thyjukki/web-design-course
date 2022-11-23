@@ -1,5 +1,5 @@
-import jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken"
 
 export const signToken = (data) => {
-  return jwt.sign(data, process.env.JWT_SECRET);
-};
+  return jwt.sign(data, process.env.TOKEN_KEY)
+}
