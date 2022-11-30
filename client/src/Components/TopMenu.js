@@ -1,9 +1,11 @@
 import React from "react"
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap"
+import { useSelector } from "react-redux"
 import "./TopMenu.css"
 
 const TopMenu = () => {
-  const loggedIn = true
+  const user = useSelector((state) => state.user)
+  const loggedIn = Object.keys(user).length > 0
   return (
     <Navbar expand="lg">
       <Container fluid>

@@ -35,6 +35,8 @@ export const CourseSearch = () => {
     skip: watch("searchWord") === ""
   })
 
+  error && console.error(error)
+
   return (
     <SearchContainer>
       <form>

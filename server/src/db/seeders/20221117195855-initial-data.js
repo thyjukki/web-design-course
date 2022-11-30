@@ -12,13 +12,19 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
+    const jwt = require("jsonwebtoken")
     const now = new Date()
+    const passwords = ["salasana", "password", "hunter2"]
+    const hashedPasswords = await Promise.all(
+      passwords.map((passwd) => jwt.sign(passwd, process.env.TOKEN_KEY))
+    )
+
     await queryInterface.bulkInsert("User", [
       {
         username: "laaden",
         fullName: "Lassi Knuuttila",
         email: "lassi@lassi.fi",
-        password: "test",
+        password: hashedPasswords[0],
         createdAt: now,
         updatedAt: now
       },
@@ -26,7 +32,7 @@ module.exports = {
         username: "jukki",
         fullName: "Jussi Wahtlström",
         email: "jussi@jussi.fi",
-        password: "test",
+        password: hashedPasswords[1],
         createdAt: now,
         updatedAt: now
       },
@@ -34,7 +40,7 @@ module.exports = {
         username: "aatos",
         fullName: "Aatos Saarinen",
         email: "aatos@aatos.fi",
-        password: "test",
+        password: hashedPasswords[2],
         createdAt: now,
         updatedAt: now
       }
@@ -73,6 +79,8 @@ module.exports = {
         courseCode: "CS-101",
         startDate: new Date("05 October 2022"),
         endDate: new Date("30 November 2022"),
+        signupStart: new Date("01 October 2022"),
+        signupEnd: new Date("06 October 2022"),
         createdAt: now,
         updatedAt: now
       },
@@ -81,6 +89,8 @@ module.exports = {
         courseCode: "CS-102",
         startDate: new Date("24 December 2022"),
         endDate: new Date("31 December 2022"),
+        signupStart: new Date("05 December 2022"),
+        signupEnd: new Date("25 December 2022"),
         createdAt: now,
         updatedAt: now
       },
@@ -89,11 +99,12 @@ module.exports = {
         courseCode: "TU-101",
         startDate: new Date("01 January 2023"),
         endDate: new Date("31 December 2023"),
+        signupStart: new Date("01 January 2022"),
+        signupEnd: new Date("06 January 2022"),
         createdAt: now,
         updatedAt: now
       }
     ])
-
 
     await queryInterface.bulkInsert("Occasion", [
       {
@@ -149,7 +160,7 @@ module.exports = {
         type: "Session",
         createdAt: now,
         updatedAt: now
-      },
+      }
     ])
 
     await queryInterface.bulkInsert("StudyPlanBlock", [

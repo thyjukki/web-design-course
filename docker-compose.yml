@@ -32,7 +32,6 @@ services:
     volumes:
       - ./server/src:/home/node/app/src:rw
       - ./server/nodemon.json:/home/node/app/nodemon.json
-      - /home/node/app/node_modules
     env_file:
       - .env
     environment:
@@ -71,5 +70,5 @@ services:
           "-p$$MYSQL_ROOT_PASS",
         ]
       timeout: 3s
-      interval: 5s
+      interval: 1s
       retries: 12
