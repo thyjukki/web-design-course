@@ -34,10 +34,10 @@ const Lecture = (props) => {
       <div>Aika- ja paikkatiedot</div>
       {events.map((event) => {
         return (
-          <>
+          <Container key={event.startDate}>
             <div>{`${event.startDate}-${event.endDate}`}</div>
             <div>{event.location}</div>
-          </>
+          </Container>
         )
       })}
     </Container>
