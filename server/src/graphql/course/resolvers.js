@@ -90,7 +90,7 @@ export const resolvers = {
       })
     },
     getOccasions: async (_, args) => {
-      var whereBuilder = {}
+      const whereBuilder = {}
       if (args.instance) {
         whereBuilder["instanceId"] = args.instance
       }
@@ -100,7 +100,7 @@ export const resolvers = {
       })
     },
     getOccasionsForUser: async (_, args) => {
-      var whereBuilder = {}
+      const whereBuilder = {}
       if (args.instance) {
         whereBuilder["instanceId"] = args.instance
       }
@@ -123,7 +123,7 @@ export const resolvers = {
       })
     },
     getCourseEnrollment: async (_, { id }) => {
-      var enrolment = await CourseEnrollment.findByPk(id, {
+      const enrolment = await CourseEnrollment.findByPk(id, {
         include: [
           {
             model: CourseInstance,
@@ -143,7 +143,7 @@ export const resolvers = {
       return enrolment
     },
     getCourseEnrollments: async (_, args) => {
-      var whereBuilder = {}
+      const whereBuilder = {}
       if (args.user) {
         whereBuilder["userId"] = args.user
       }
