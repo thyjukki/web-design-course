@@ -49,11 +49,16 @@ pipeline{
       when {
         branch 'main'
       }
-      steps {
-          withCredentials([string(credentialsId: 'caprover-password', variable: 'CAPROVER_PASSWORD')]) {
-              sh "caprover deploy -c captain-definition-client"
-              sh "caprover deploy -c captain-definition-server"
+      agent {
+          docker {
+              image 'caprover/cli-caprover'
+              label 'linux&&docker'
           }
+      }
+      steps {
+        withCredentials([string(credentialsId: 'caprover-password', variable: 'CAPROVER_PASSWORD')]) {
+            sh "caprover deploy -c captain-definition-client"
+            sh "caprover deploy -c captain-definition-server"
         }
       }
     }
