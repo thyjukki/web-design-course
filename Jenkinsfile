@@ -50,13 +50,9 @@ pipeline{
         branch 'main'
       }
       steps {
-          withCredentials([sshUserPrivateKey(credentialsId: 'sisu2-production-server', usernameVariable: 'SSH_USERNAME', keyFileVariable: 'SSH_KEY_PATH')]) {
-          script {
-            def remote = [name: 'sshgateway', host: '192.168.2.121', user: SSH_USERNAME, allowAnyHosts: true, identityFile: SSH_KEY_PATH]
-            sshPut remote: remote, from: 'scripts/deploy-client.sh', into: '.'
-            sshPut remote: remote, from: 'scripts/deploy-server.sh', into: '.'
-            sshCommand remote: remote, command: "chmod a+x ./deploy-client.sh && ./deploy-client.sh ${BUILD_NUMBER}"
-            sshCommand remote: remote, command: "chmod a+x ./deploy-server.sh && ./deploy-server.sh ${BUILD_NUMBER}"
+          withCredentials([string(credentialsId: 'caprover-password', variable: 'CAPROVER_PASSWORD')]) {
+              sh "caprover deploy -c captain-definition-client"
+              sh "caprover deploy -c captain-definition-server"
           }
         }
       }

@@ -50,6 +50,7 @@ services:
     image: mysql
     restart: unless-stopped
     environment:
+      - MYSQL_ROOT_USER=${MYSQL_USER}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASS}
       - MYSQL_DATABASE=${MYSQL_DB}
     volumes:
@@ -65,7 +66,7 @@ services:
           "-h",
           "localhost",
           "-u",
-          "root",
+          "$$MYSQL_ROOT_USER",
           "-p$$MYSQL_ROOT_PASS",
         ]
       timeout: 3s

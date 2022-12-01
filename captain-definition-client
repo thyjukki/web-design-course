@@ -1,0 +1,6 @@
+{
+  "schemaVersion": 2,
+  "imageName": "nexus.jukk.it/sisu2/client",
+  "caproverApp": "sisu-client",
+  "caproverUrl": "https://captain.cap.jukk.it"
+}

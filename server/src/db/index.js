@@ -1,16 +1,16 @@
 import Sequelize from "sequelize"
 import mysql from "mysql2/promise"
-import { dbHost, dbName, dbPort, dbPass } from "../config/environment/index.js"
+import { dbHost, dbName, dbPort, dbUser, dbPass } from "../config/environment/index.js"
 
 const connection = await mysql.createConnection({
   host: dbHost,
   port: dbPort,
-  user: "root",
+  user: dbUser,
   password: dbPass
 })
 await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`)
 
-export const sequelize = new Sequelize(dbName, "root", dbPass, {
+export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   host: dbHost,
   dialect: "mysql",
   logging: true,
