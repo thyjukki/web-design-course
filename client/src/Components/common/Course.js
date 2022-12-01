@@ -5,7 +5,7 @@ import { Container } from "react-bootstrap"
 
 const Course = (props) => {
   const { course, courseInstance } = props
-  console.log(courseInstance)
+
   return (
     <Container>
       <Accordion defaultActiveKey="0">
@@ -34,10 +34,10 @@ const Lecture = (props) => {
       <div>Aika- ja paikkatiedot</div>
       {events.map((event) => {
         return (
-          <>
+          <Container key={event.startDate}>
             <div>{`${event.startDate}-${event.endDate}`}</div>
             <div>{event.location}</div>
-          </>
+          </Container>
         )
       })}
     </Container>

@@ -10,6 +10,7 @@ const COURSES = gql`
     }
   }
 `
+import Calendar from "./common/Calendar"
 
 const FrontPage = () => {
   const { loading, error, data } = useQuery(COURSES)
@@ -51,6 +52,7 @@ const FrontPage = () => {
           ]
         }}
       />
+      <Calendar />
     </div>
   )
 }
