@@ -15,10 +15,8 @@ import Calendar from "./common/Calendar"
 const FrontPage = () => {
   const { loading, error, data } = useQuery(COURSES)
   error && console.error(error)
-  data && console.log(data)
   return (
     <div>
-      Hello World!
       {loading && <p>Loading</p>}
       {error && <p>Error: {error.message}</p>}
       <Course

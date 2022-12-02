@@ -23,7 +23,6 @@ export const resolvers = {
       return Course.findByPk(code)
     },
     searchCourses: async (_, { word }) => {
-      console.log(word)
       return Course.findAll({
         where: {
           [Op.or]: [
@@ -123,7 +122,7 @@ export const resolvers = {
       })
     },
     getCourseEnrollment: async (_, { id }) => {
-      const enrolment = await CourseEnrollment.findByPk(id, {
+      const enrollment = await CourseEnrollment.findByPk(id, {
         include: [
           {
             model: CourseInstance,
@@ -139,8 +138,7 @@ export const resolvers = {
           }
         ]
       })
-      console.log(enrolment)
-      return enrolment
+      return enrollment
     },
     getCourseEnrollments: async (_, args) => {
       const whereBuilder = {}
@@ -230,18 +228,18 @@ export const resolvers = {
       }
     },
     createCourseEnrollment: async (_, args) => {
-      const enrolment = await CourseEnrollment.create(args)
-      return enrolment.reload({ include: { all: true } })
+      const enrollment = await CourseEnrollment.create(args)
+      return enrollment.reload({ include: { all: true } })
     },
     updateCourseEnrollment: async (_, { id, blockId }) => {
-      const enrolment = await CourseEnrollment.findOne({
+      const enrollment = await CourseEnrollment.findOne({
         where: { id: id }
       })
       const studyPlanBlock = await StudyPlanBlock.findOne({
         where: { id: blockId }
       })
 
-      if (!enrolment) {
+      if (!enrollment) {
         throw new GraphQLError("Enrollment not found!", {
           extensions: {
             code: "BAD_USER_INPUT"
@@ -256,8 +254,8 @@ export const resolvers = {
         })
       }
 
-      await enrolment.update({ blockId: studyPlanBlock.id })
-      return enrolment.reload({
+      await enrollment.update({ blockId: studyPlanBlock.id })
+      return enrollment.reload({
         include: [
           {
             model: StudyPlanBlock,
@@ -276,11 +274,10 @@ export const resolvers = {
     },
     deleteCourseEnrollment: async (_, { id }) => {
       try {
-        console.log(id)
         CourseEnrollment.destroy({ where: { id } })
         return `CourseEnrollment ${id} deleted`
       } catch (e) {
-        console.log(e)
+        console.error(e)
         return e
       }
     }

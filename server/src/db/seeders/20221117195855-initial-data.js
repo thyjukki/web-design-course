@@ -12,11 +12,12 @@ module.exports = {
      *   isBetaMember: false
      * }], {});
      */
-    const jwt = require("jsonwebtoken")
+    const bcrypt = require("bcryptjs")
     const now = new Date()
     const passwords = ["salasana", "password", "hunter2"]
+    const salt = bcrypt.genSaltSync()
     const hashedPasswords = await Promise.all(
-      passwords.map((passwd) => jwt.sign(passwd, process.env.TOKEN_KEY))
+      passwords.map((passwd) => bcrypt.hash(passwd, salt))
     )
 
     await queryInterface.bulkInsert("User", [
@@ -41,6 +42,59 @@ module.exports = {
         fullName: "Aatos Saarinen",
         email: "aatos@aatos.fi",
         password: hashedPasswords[2],
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        username: "tkari",
+        fullName: "Teemu Teekkari",
+        email: "t@kari.fi",
+        password: hashedPasswords[2],
+        createdAt: now,
+        updatedAt: now
+      }
+    ])
+
+    await queryInterface.bulkInsert("UserRole", [
+      {
+        userId: 1,
+        role: "student",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 1,
+        role: "teacher",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 2,
+        role: "student",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 2,
+        role: "teacher",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 3,
+        role: "student",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 3,
+        role: "teacher",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 4,
+        role: "student",
         createdAt: now,
         updatedAt: now
       }

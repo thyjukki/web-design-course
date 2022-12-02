@@ -4,8 +4,8 @@ import {
   UserRole,
   StudyPlan
 } from "../../models/index.js"
-import { hashPassword } from "../../utils/hashPassword.js"
-import { signToken } from "../../utils/signToken.js"
+import bcryptjs from "bcryptjs"
+import jwt from "jsonwebtoken"
 
 import { login } from "./mutations/index.js"
 
@@ -46,21 +46,52 @@ export const resolvers = {
           }
         ]
       })
+    },
+    getUserInfo: async (_, args, context) => {
+      const userId = context.user.sub
+      return User.findByPk(userId, {
+        attributes: { exclude: ["password"] },
+        include: [
+          {
+            model: UserRole,
+            as: "roles"
+          },
+          {
+            model: CourseInstance,
+            as: "lecturerIn"
+          },
+          {
+            model: StudyPlan,
+            as: "studyPlans",
+            include: { all: true }
+          }
+        ]
+      })
     }
   },
+
   Mutation: {
     register: async (_, args) => {
-      console.log(args)
-      const { password, ...rest } = args
-      const hashedPassword = await hashPassword(password)
-      const result = await User.create({ ...rest, password: hashedPassword })
+      const { password, roles, ...rest } = args
 
-      return {
-        id: result.id,
-        username: result.username,
-        password: result.password,
-        token: signToken({ userId: result.id })
-      }
+      const salt = bcryptjs.genSaltSync()
+      const hashedPassword = bcryptjs.hashSync(password, salt)
+      const user = await User.create({ ...rest, password: hashedPassword })
+      const res = await Promise.all(
+        roles.map(async (role) => {
+          await UserRole.create({ role, userId: user.id })
+        })
+      )
+      const userRoles = await UserRole.findAll({ where: { userId: user.id } })
+      return jwt.sign(
+        {
+          sisu: {
+            roles: userRoles
+          }
+        },
+        process.env.TOKEN_KEY,
+        { algorithm: "HS256", subject: user.id.toString(), expiresIn: "1h" }
+      )
     },
     deleteUser: async (_, { id }) => {
       try {

@@ -14,7 +14,7 @@ CourseInstance.belongsTo(User, { foreignKey: "lecturerId", as: "lecturer" })
 User.hasMany(StudyPlan, { foreignKey: "userId", as: "studyPlans" })
 StudyPlan.belongsTo(User, { foreignKey: "userId", as: "user" })
 
-User.hasMany(CourseEnrollment, { foreignKey: "userId", as: "enrolments" })
+User.hasMany(CourseEnrollment, { foreignKey: "userId", as: "enrollments" })
 CourseEnrollment.belongsTo(User, { foreignKey: "userId", as: "user" })
 
 CourseInstance.hasMany(CourseEnrollment, {
