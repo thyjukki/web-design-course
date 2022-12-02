@@ -8,7 +8,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min"
 import { Provider } from "react-redux"
 import store from "./reduxStore"
 
-const graphqlUrl = `http://${process.env.BACKEND_URL}:${process.env.BACKEND_PORT}/graphql`
+const graphqlUrl = `${process.env.BACKEND_URL}/graphql`
 
 const client = new ApolloClient({
   uri: graphqlUrl,

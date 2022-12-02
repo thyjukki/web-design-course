@@ -25,6 +25,8 @@ apollo.applyMiddleware({
   cors: {
     origin: [
       "https://sisu.jukk.it",
+      "https://sisu-server.cap.jukk.it",
+      "https://sisu-client.cap.jukk.it",
       `http://localhost:${process.env.FRONTEND_PORT}`,
       "https://studio.apollographql.com"
     ]
