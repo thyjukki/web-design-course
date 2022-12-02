@@ -13,7 +13,7 @@ const COURSES = gql`
 import Calendar from "./common/Calendar"
 
 const FrontPage = () => {
-  const { loading, error, data } = useQuery(COURSES)
+  const { loading, error } = useQuery(COURSES)
   error && console.error(error)
   return (
     <div>

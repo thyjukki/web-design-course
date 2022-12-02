@@ -3,12 +3,11 @@ import express from "express"
 import pkg from "express-jwt"
 import morgan from "morgan"
 import bp from "body-parser"
-import { ApolloGateway, RemoteGraphQLDataSource } from "@apollo/gateway"
 import { errorHandler } from "./middlewares/errors.js"
 import userRouter from "./routes/users.js"
 import { typeDefs, resolvers } from "./graphql/index.js"
 
-const { expressjwt, ExpressJwtRequest } = pkg
+const { expressjwt } = pkg
 const app = express()
 app.disable("x-powered-by")
 

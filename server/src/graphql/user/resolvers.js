@@ -77,7 +77,7 @@ export const resolvers = {
       const salt = bcryptjs.genSaltSync()
       const hashedPassword = bcryptjs.hashSync(password, salt)
       const user = await User.create({ ...rest, password: hashedPassword })
-      const res = await Promise.all(
+      await Promise.all(
         roles.map(async (role) => {
           await UserRole.create({ role, userId: user.id })
         })
