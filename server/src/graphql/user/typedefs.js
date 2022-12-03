@@ -9,11 +9,17 @@ export const typeDefs = gql`
     password: String
     token: String
     email: String
-    roles: [String]
+    roles: [UserRole]
     lecturerIn: [CourseInstance]
     studyPlans: [StudyPlan]
     createdOn: String
     lastLogin: String
+  }
+
+  type UserRole {
+    id: Int!
+    userId: Int!
+    role: String!
   }
 
   input userInput {
@@ -24,8 +30,8 @@ export const typeDefs = gql`
   type Query {
     getUsers: [User]
     getUser(id: ID!): User
+    getUserInfo: User
   }
-  
 
   type Mutation {
     register(
@@ -33,9 +39,10 @@ export const typeDefs = gql`
       email: String!
       password: String!
       fullName: String
-    ): User
+      roles: [String]
+    ): String
 
-    login(input: userInput): User
+    login(username: String!, password: String!): String
 
     deleteUser(id: ID!): String
   }

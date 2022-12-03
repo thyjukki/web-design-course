@@ -19,13 +19,13 @@ export const User = sequelize.define("User", {
   },
   fullName: Sequelize.STRING,
   password: Sequelize.STRING,
-  createdOn: Sequelize.TIME,
   lastLogin: Sequelize.TIME
 })
 
 export const UserRole = sequelize.define("UserRole", {
   id: {
-    type: Sequelize.UUID,
+    autoIncrement: true,
+    type: Sequelize.INTEGER,
     primaryKey: true
   },
   role: Sequelize.STRING

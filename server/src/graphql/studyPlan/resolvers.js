@@ -22,7 +22,8 @@ export const resolvers = {
         include: [
           {
             model: StudyPlanBlock,
-            as: "children"
+            as: "children",
+            include: { all: true }
           }
         ]
       })
@@ -57,7 +58,6 @@ export const resolvers = {
           })
         }
       }
-      console.log(args)
       return StudyPlanBlock.create(args, {
         include: [
           {

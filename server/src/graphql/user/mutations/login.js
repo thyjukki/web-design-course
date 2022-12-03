@@ -1,24 +1,29 @@
-import { User } from "../../../models/index.js";
-import { signToken, verifyPassword } from "../../../utils/index.js";
+import { User, UserRole } from "../../../models/index.js"
+import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
 
-export const login = async (parent, args, context) => {
-  const { password, username } = args.input;
+export const login = async (_, { username, password }) => {
+  const user = await User.findOne({ where: { username } })
 
-  const result = await User.findOne({ where: { username } });
-
-  if (!result) {
-    throw new Error("Invalid password or username");
+  if (!user) {
+    throw new Error("Invalid password or username")
   }
 
-  const isValidPassword = await verifyPassword(result.password, password);
+  const isValidPassword = bcrypt.compareSync(password, user.password)
 
   if (!isValidPassword) {
-    throw new Error("Invalid password or username");
+    throw new Error("Invalid password or username")
   }
+  const roleRows = await UserRole.findAll({ where: { userId: user.id } })
+  const roles = roleRows.map((role) => role.role)
 
-  return {
-    id: result.id,
-    username: result.username,
-    token: signToken({ userId: result.id }),
-  };
-};
+  return jwt.sign(
+    {
+      sisu: {
+        roles: roles
+      }
+    },
+    process.env.TOKEN_KEY,
+    { algorithm: "HS256", subject: user.id.toString(), expiresIn: "1h" }
+  )
+}

@@ -6,6 +6,7 @@ export const typeDefs = gql`
     id: ID!
     name: String!
     user: User
+    children: [StudyPlanBlock]
     baseBlock: StudyPlanBlock
   }
 
@@ -13,6 +14,7 @@ export const typeDefs = gql`
     id: ID!
     name: String!
     parent: StudyPlanBlock
+    enrollments: [CourseEnrollment]
   }
 
   type Query {

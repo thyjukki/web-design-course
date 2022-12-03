@@ -23,13 +23,14 @@ services:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
   server:
     container_name: sisu
+    image: sisu
     restart: unless-stopped
     user: "1000:1000"
     depends_on:
       db:
         condition: service_healthy
     volumes:
-      - ./server/src:/home/node/app/src:rw
+      - ./server:/home/node/app:rw
       - ./server/nodemon.json:/home/node/app/nodemon.json
     env_file:
       - .env
