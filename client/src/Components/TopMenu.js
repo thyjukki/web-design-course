@@ -26,9 +26,6 @@ const TopMenu = () => {
   }
 
   const loggedIn = localStorage.getItem("token")
-  const userRoles = localStorage.getItem("roles")
-  const isTeacher = userRoles.includes("teacher")
-  const isStudent = userRoles.includes("student")
   return (
     <Navbar expand="lg">
       <Container fluid>
@@ -43,13 +40,13 @@ const TopMenu = () => {
                 <>
                   <Nav className="me-auto">
                     
-                    {isStudent && 
+                    {data?.getUserInfo.roles.some(x  => x.role === "teacher") && 
                     <Nav.Link eventKey="study-structure" href="#">
                       Opintojen rakenne
                     </Nav.Link>
                     }
-                    {isTeacher && 
-                    <Nav.Link eventKey="study-structure" href="#">
+                    {data?.getUserInfo.roles.some(x  => x.role === "student") && 
+                    <Nav.Link eventKey="manage-course" href="#">
                       Hallitse kursseja
                     </Nav.Link>
                     }
