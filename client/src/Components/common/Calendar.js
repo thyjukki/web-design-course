@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { useState } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import styled from "styled-components"
 import { Container, Button } from "react-bootstrap"
 import {
@@ -13,9 +12,19 @@ import {
   nextSunday,
   addWeeks
 } from "date-fns"
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 
 const Calendar = (props) => {
   const [weekOffset, setOffset] = useState(0)
+  const myRef = useRef(null)
+
+  useEffect(() => {
+    myRef.current.scrollIntoView({
+      behavior: "auto",
+      block: "start",
+      inline: "start"
+    })
+  })
 
   const current = new Date()
   const today = new Date(
@@ -122,14 +131,31 @@ const Calendar = (props) => {
   return (
     <Container>
       <Header>
-        <Button onClick={() => setOffset(weekOffset - 1)}>Vähennä</Button>
-        <div>{getWeek()}</div>
-        <Button onClick={() => setOffset(weekOffset + 1)}>Lisää</Button>
+        <Button onClick={() => setOffset(weekOffset - 1)}>
+          <FaChevronLeft />
+          <Offset />
+        </Button>
+        <CurrWeek>{getWeek()}</CurrWeek>
+        <Button onClick={() => setOffset(weekOffset + 1)}>
+          <FaChevronRight />
+          <Offset />
+        </Button>
       </Header>
+      <WeekDays>
+        <div />
+        <DateHeader>{`ma ${mon.getDate()}.${mon.getMonth() + 1}`}</DateHeader>
+        <DateHeader>{`ti ${tue.getDate()}.${tue.getMonth() + 1}`}</DateHeader>
+        <DateHeader>{`ke ${wed.getDate()}.${wed.getMonth() + 1}`}</DateHeader>
+        <DateHeader>{`to ${thu.getDate()}.${thu.getMonth() + 1}`}</DateHeader>
+        <DateHeader>{`pe ${fri.getDate()}.${fri.getMonth() + 1}`}</DateHeader>
+        <DateHeader>{`la ${sat.getDate()}.${sat.getMonth() + 1}`}</DateHeader>
+        <DateHeader>{`su ${sun.getDate()}.${sun.getMonth() + 1}`}</DateHeader>
+        <EndLine />
+      </WeekDays>
       <Canvas>
         <Week>
+          <Times myRef={myRef} />
           <Day
-            date={`ma ${mon.getDate()}.${mon.getMonth() + 1}`}
             occ={
               occSorted[
                 `${mon.getDate()}.${mon.getMonth() + 1}.${mon.getFullYear()}`
@@ -137,7 +163,6 @@ const Calendar = (props) => {
             }
           />
           <Day
-            date={`ti ${tue.getDate()}.${tue.getMonth() + 1}`}
             occ={
               occSorted[
                 `${tue.getDate()}.${tue.getMonth() + 1}.${tue.getFullYear()}`
@@ -145,7 +170,6 @@ const Calendar = (props) => {
             }
           />
           <Day
-            date={`ke ${wed.getDate()}.${wed.getMonth() + 1}`}
             occ={
               occSorted[
                 `${wed.getDate()}.${wed.getMonth() + 1}.${wed.getFullYear()}`
@@ -153,7 +177,6 @@ const Calendar = (props) => {
             }
           />
           <Day
-            date={`to ${thu.getDate()}.${thu.getMonth() + 1}`}
             occ={
               occSorted[
                 `${thu.getDate()}.${thu.getMonth() + 1}.${thu.getFullYear()}`
@@ -161,7 +184,6 @@ const Calendar = (props) => {
             }
           />
           <Day
-            date={`pe ${fri.getDate()}.${fri.getMonth() + 1}`}
             occ={
               occSorted[
                 `${fri.getDate()}.${fri.getMonth() + 1}.${fri.getFullYear()}`
@@ -169,7 +191,6 @@ const Calendar = (props) => {
             }
           />
           <Day
-            date={`la ${sat.getDate()}.${sat.getMonth() + 1}`}
             occ={
               occSorted[
                 `${sat.getDate()}.${sat.getMonth() + 1}.${sat.getFullYear()}`
@@ -177,7 +198,6 @@ const Calendar = (props) => {
             }
           />
           <Day
-            date={`su ${sun.getDate()}.${sun.getMonth() + 1}`}
             occ={
               occSorted[
                 `${sun.getDate()}.${sun.getMonth() + 1}.${sun.getFullYear()}`
@@ -189,6 +209,69 @@ const Calendar = (props) => {
     </Container>
   )
 }
+
+const Times = (props) => {
+  const { myRef } = props
+
+  return (
+    <FullDay>
+      {hours.map((hour) => {
+        if (hour === "07.00") {
+          return (
+            <Hour ref={myRef} key={hour}>
+              {hour}
+            </Hour>
+          )
+        } else {
+          return <Hour key={hour}>{hour}</Hour>
+        }
+      })}
+    </FullDay>
+  )
+}
+
+const Header = styled.div`
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+`
+
+const CurrWeek = styled.div`
+  margin: 0 20px 0 20px;
+  display: flex;
+  align-items: center;
+`
+
+const Canvas = styled.div`
+  background-color: white;
+  height: 600px;
+  overflow: scroll;
+  border-top: 1px solid grey;
+  border-right: 1px solid grey;
+`
+
+const Week = styled.div`
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+`
+const WeekDays = styled.div`
+  display: grid;
+  grid-template-columns: 59px repeat(7, 1fr) 17px;
+`
+
+const Offset = styled.div`
+  height: 4px;
+`
+
+const DateHeader = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-left: 1px solid grey;
+`
+const EndLine = styled.div`
+  border-left: 1px solid grey;
+`
 
 const hours = [
   "00.00",
@@ -244,68 +327,87 @@ const timeMatching = {
   "23.00": "00.00"
 }
 
-const sortTimes = (arr) => {
-  const ret = {}
-  arr.map((obj) => {
-    const sTime = obj.startTime.split(":")[1]
-    ret[sTime] = obj
-  })
-  return ret
-}
-
 const Day = (props) => {
-  const { date, occ } = props
+  const { occ } = props
   let occStatus = false
   let startH = null
+
+  const sortTimes = (arr) => {
+    const ret = {}
+    arr.map((obj) => {
+      const sTime = obj.startTime.split(":")[1]
+      ret[sTime] = obj
+    })
+    return ret
+  }
+
   const sorted = occ && sortTimes(occ)
 
   return (
-    <Container>
-      {date}
-      <FullDay>
-        {hours.map((hour) => {
-          if (occStatus) {
-            if (sorted[startH].endTime.split(":")[1] === timeMatching[hour]) {
-              occStatus = false
-              startH = null
-              return <EventEnd key={hour} />
-            } else {
-              return <EventMid key={hour} />
-            }
+    <FullDay>
+      {hours.map((hour) => {
+        if (occStatus) {
+          if (sorted[startH].endTime.split(":")[1] === timeMatching[hour]) {
+            occStatus = false
+            startH = null
+            return <EventEnd key={hour} />
           } else {
-            if (sorted && sorted.hasOwnProperty(hour)) {
-              occStatus = true
-              startH = hour
-              return (
-                <EventStart key={hour}>{`${hour}-${
-                  sorted[startH].endTime.split(":")[1]
-                }`}</EventStart>
-              )
-            } else {
-              return <Hour key={hour}>{hour}</Hour>
-            }
+            return <EventMid key={hour} />
           }
-        })}
-      </FullDay>
-    </Container>
+        } else {
+          if (sorted && sorted.hasOwnProperty(hour)) {
+            occStatus = true
+            startH = hour
+            return (
+              <EventStart
+                key={hour}
+                time={`${hour}-${sorted[startH].endTime.split(":")[1]}`}
+              />
+            )
+          } else {
+            return (
+              <Hour key={hour}>
+                <Line />
+              </Hour>
+            )
+          }
+        }
+      })}
+    </FullDay>
   )
+}
+
+const EventStart = (props) => {
+  const { time, courseName } = props
+  return <EventStartStyle>{time}</EventStartStyle>
 }
 
 const FullDay = styled.div`
   display: grid;
   grid-template-rows: repeat(24, 1fr);
+  border-right: 1px solid grey;
 `
 
 const Hour = styled.div`
   height: 50px;
-  border: 2px solid grey;
+  border-bottom: 1px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
-const EventStart = styled.div`
+const Line = styled.div`
+  width: 100%;
+  border-top: 0.5px dotted grey;
+  position: relative;
+`
+
+const EventStartStyle = styled.div`
   height: 50px;
   border-top: 4px solid green;
   border-left: 4px solid green;
   border-right: 4px solid green;
+  font-size: 14px;
 `
 
 const EventMid = styled.div`
@@ -319,23 +421,6 @@ const EventEnd = styled.div`
   border-bottom: 4px solid green;
   border-left: 4px solid green;
   border-right: 4px solid green;
-`
-
-const Header = styled.div`
-  display: flex;
-  justify-content: center;
-`
-
-const Canvas = styled.div`
-  background-color: white;
-  border: 5px solid black;
-  height: 600px;
-  overflow: scroll;
-`
-
-const Week = styled.div`
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
 `
 
 export default Calendar
