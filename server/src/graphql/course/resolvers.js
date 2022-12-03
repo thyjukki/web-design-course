@@ -23,8 +23,9 @@ export const resolvers = {
       return Course.findByPk(code)
     },
     searchCourses: async (_, { word }) => {
-      return Course.findAll({
-        where: {
+      var whereBuilder = {}
+      if (word) {
+        whereBuilder = {
           [Op.or]: [
             {
               name: {
@@ -37,7 +38,10 @@ export const resolvers = {
               }
             }
           ]
-        },
+        }
+      }
+      return Course.findAll({
+        where: whereBuilder,
         include: [
           {
             model: CourseInstance,
@@ -173,6 +177,7 @@ export const resolvers = {
 
   Mutation: {
     createCourse: async (_, args) => {
+      console.log(args)
       return Course.create(args)
     },
     deleteCourse: async (_, { code }) => {

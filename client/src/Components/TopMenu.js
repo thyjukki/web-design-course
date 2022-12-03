@@ -46,7 +46,7 @@ const TopMenu = () => {
                     </Nav.Link>
                     }
                     {data?.getUserInfo.roles.some(x  => x.role === "student") && 
-                    <Nav.Link eventKey="manage-course" href="#">
+                    <Nav.Link eventKey="manage-course" href="/manage-courses">
                       Hallitse kursseja
                     </Nav.Link>
                     }
