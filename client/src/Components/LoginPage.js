@@ -1,11 +1,13 @@
 import { useMutation } from "@apollo/client"
-import React, { useEffect } from "react"
+import axios from "axios"
+import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import styled from "styled-components"
 import { LOGIN } from "./graphql/user"
 
 const LoginPage = () => {
+  const [error, setError] = useState("")
   const navigate = useNavigate()
   const {
     register,
@@ -13,19 +15,22 @@ const LoginPage = () => {
     formState: { errors }
   } = useForm()
 
-  const [loginData, { error, data }] = useMutation(LOGIN)
-
-  useEffect(() => {
-    if (data) {
-      localStorage.setItem("token", data.login)
-      navigate("/")
+  const onSubmit = async (formData) => {
+    const loginData = {
+      username: formData.username,
+      password: formData.password
     }
-  })
-
-  const onSubmit = (formData) => {
-    loginData({
-      variables: { username: formData.username, password: formData.password }
-    })
+    try {
+      const response = await axios.post(
+        `${process.env.BACKEND_URL}/login`,
+        loginData
+      )
+      localStorage.setItem("token", response.data)
+      setError("")
+      navigate("/")
+    } catch (err) {
+      setError(err.response.data)
+    }
   }
   return (
     <div>
@@ -41,7 +46,7 @@ const LoginPage = () => {
         {/* errors will return when field validation fails  */}
 
         <input type="submit" value="Kirjaudu" />
-        {error && <Error>{error.message}</Error>}
+        {error && <Error>{error}</Error>}
         {errors.username && <Error>Kirjoita käyttäjätunnuksesi</Error>}
         {errors.password && <Error>Kirjoita salasanasi</Error>}
       </Form>

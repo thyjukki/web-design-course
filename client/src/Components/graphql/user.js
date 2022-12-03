@@ -24,3 +24,13 @@ export const GET_USER_INFO = gql`
     }
   }
 `
+
+export const GET_ENROLLMENT_INSTANCE_IDS = gql`
+  query {
+    getCourseEnrollments {
+      instance {
+        id
+      }
+    }
+  }
+`

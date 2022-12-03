@@ -13,6 +13,9 @@ const TopMenu = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       userInfo()
+    } else {
+      client.resetStore()
+      navigate("/login")
     }
   }, [])
 
