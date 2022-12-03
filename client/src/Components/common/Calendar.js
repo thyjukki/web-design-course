@@ -13,6 +13,7 @@ import {
   addWeeks
 } from "date-fns"
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
+import Rand from "rand-seed"
 
 const Calendar = (props) => {
   const [weekOffset, setOffset] = useState(0)
@@ -67,48 +68,56 @@ const Calendar = (props) => {
       startTime: "30.11.2022:10.00",
       endTime: "30.11.2022:12.00",
       type: "luento",
-      name: "Todennäköisyys ja tilasto"
+      courseCode: "CS-101",
+      name: "Tietotekniikan alkeet"
     },
     {
       startTime: "1.12.2022:10.00",
       endTime: "1.12.2022:12.00",
       type: "luento",
-      name: "Todennäköisyys ja tilasto"
+      courseCode: "CS-102",
+      name: "Tietotekniikan jatkokurssi"
     },
     {
       startTime: "3.12.2022:12.00",
       endTime: "2.12.2022:14.00",
       type: "luento",
-      name: "Todennäköisyys ja tilasto"
+      courseCode: "TU-101",
+      name: "Tuotantotalous 1"
     },
     {
       startTime: "3.12.2022:14.00",
       endTime: "3.12.2022:16.00",
       type: "luento",
+      courseCode: "MS-501",
       name: "Todennäköisyys ja tilasto"
     },
     {
       startTime: "29.11.2022:12.00",
       endTime: "29.11.2022:14.00",
       type: "luento",
+      courseCode: "MS-502",
       name: "Todennäköisyys ja tilasto"
     },
     {
       startTime: "1.12.2022:12.00",
       endTime: "1.12.2022:14.00",
       type: "luento",
+      courseCode: "MS-503",
       name: "Todennäköisyys ja tilasto"
     },
     {
       startTime: "2.12.2022:08.00",
       endTime: "2.11.2022:10.00",
       type: "luento",
-      name: "Todennäköisyys ja tilasto"
+      courseCode: "CS-101",
+      name: "Todennäköisyys ja tilastotieteen peruskurssi"
     },
     {
       startTime: "2.12.2022:12.00",
       endTime: "2.12.2022:15.00",
       type: "luento",
+      courseCode: "CS-102",
       name: "Todennäköisyys ja tilasto"
     }
   ]
@@ -327,6 +336,22 @@ const timeMatching = {
   "23.00": "00.00"
 }
 
+const courseColors = ["#f1b963", "#dde0ab", "#97cba9", "#668ba4"]
+
+function getDecimalPart(num) {
+  if (Number.isInteger(num)) {
+    return 0
+  }
+
+  const decimalStr = num.toString().split(".")[1].slice(0, 3)
+  return Number(decimalStr)
+}
+
+const getCourseColor = (courseName) => {
+  const rand = new Rand(courseName)
+  return courseColors[getDecimalPart(rand.next()) % 4]
+}
+
 const Day = (props) => {
   const { occ } = props
   let occStatus = false
@@ -348,11 +373,17 @@ const Day = (props) => {
       {hours.map((hour) => {
         if (occStatus) {
           if (sorted[startH].endTime.split(":")[1] === timeMatching[hour]) {
+            const eventColour = getCourseColor(sorted[startH].courseCode)
             occStatus = false
             startH = null
-            return <EventEnd key={hour} />
+            return <EventEnd key={hour} courseColor={eventColour} />
           } else {
-            return <EventMid key={hour} />
+            return (
+              <EventMid
+                key={hour}
+                courseColor={getCourseColor(sorted[startH].courseCode)}
+              />
+            )
           }
         } else {
           if (sorted && sorted.hasOwnProperty(hour)) {
@@ -362,6 +393,8 @@ const Day = (props) => {
               <EventStart
                 key={hour}
                 time={`${hour}-${sorted[startH].endTime.split(":")[1]}`}
+                courseColor={getCourseColor(sorted[startH].courseCode)}
+                courseName={sorted[startH].name}
               />
             )
           } else {
@@ -378,19 +411,25 @@ const Day = (props) => {
 }
 
 const EventStart = (props) => {
-  const { time, courseName } = props
-  return <EventStartStyle>{time}</EventStartStyle>
+  const { time, courseName, courseColor } = props
+  return (
+    <EventStartStyle courseColor={courseColor}>
+      <EventTime courseColor={courseColor}>{time}</EventTime>
+      <EventName>{courseName}</EventName>
+    </EventStartStyle>
+  )
 }
 
 const FullDay = styled.div`
   display: grid;
   grid-template-rows: repeat(24, 1fr);
-  border-right: 1px solid grey;
+  border-right: 1px solid #9b9b9b;
 `
 
 const Hour = styled.div`
   height: 50px;
-  border-bottom: 1px solid grey;
+  border-bottom: 0.5px solid #9b9b9b;
+  border-top: 0.5px solid #9b9b9b;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -398,29 +437,38 @@ const Hour = styled.div`
 
 const Line = styled.div`
   width: 100%;
-  border-top: 0.5px dotted grey;
+  border-top: 0.5px dotted #9b9b9b;
   position: relative;
 `
 
 const EventStartStyle = styled.div`
   height: 50px;
-  border-top: 4px solid green;
-  border-left: 4px solid green;
-  border-right: 4px solid green;
+  border-top: 4px solid ${(p) => p.courseColor};
+  border-left: 4px solid ${(p) => p.courseColor};
+  border-radius: 6px 6px 0 0;
   font-size: 14px;
+  background-color: rgba(155, 155, 155, 0.2);
 `
 
 const EventMid = styled.div`
   height: 50px;
-  border-left: 4px solid green;
-  border-right: 4px solid green;
+  border-left: 4px solid ${(p) => p.courseColor};
+  background-color: rgba(155, 155, 155, 0.2);
 `
 
 const EventEnd = styled.div`
   height: 50px;
-  border-bottom: 4px solid green;
-  border-left: 4px solid green;
-  border-right: 4px solid green;
+  border-left: 4px solid ${(p) => p.courseColor};
+  background-color: rgba(155, 155, 155, 0.2);
+  border-radius: 0 0 6px 6px;
 `
+
+const EventTime = styled.div`
+  background-color: ${(p) => p.courseColor};
+`
+
+const EventName = styled.div`
+  padding-left: 3px
+`;
 
 export default Calendar
