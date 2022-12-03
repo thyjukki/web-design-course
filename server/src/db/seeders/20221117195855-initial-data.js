@@ -115,7 +115,15 @@ module.exports = {
         description: "Tällä kurssilla opetellaan lisää ATK-taitoja",
         credits: 5,
         createdAt: now,
-        updatedAt: now 
+        updatedAt: now
+      },
+      {
+        code: "TU-101",
+        name: "Käsienheiluttelun alkeiskurssi",
+        description: "Tällä kurssilla opetellaan heiluttamaan käsiä",
+        credits: 5,
+        createdAt: now,
+        updatedAt: now
       },
       {
         code: "MS-501",
@@ -398,10 +406,14 @@ module.exports = {
       where: { username: ["laaden", "jukki", "aatos"] }
     })
     await queryInterface.bulkDelete("Course", {
-      where: { code: ["CS-101", "CS-102", "TU-101", "MS-501", "MS-502", "MS-503"] }
+      where: {
+        code: ["CS-101", "CS-102", "TU-101", "MS-501", "MS-502", "MS-503"]
+      }
     })
     await queryInterface.bulkDelete("CourseInstance", {
-      where: { courseCode: ["CS-101", "CS-102", "TU-101", "MS-501", "MS-502", "MS-503"] }
+      where: {
+        courseCode: ["CS-101", "CS-102", "TU-101", "MS-501", "MS-502", "MS-503"]
+      }
     })
   }
 }
