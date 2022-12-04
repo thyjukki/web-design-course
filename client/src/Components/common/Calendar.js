@@ -94,65 +94,6 @@ const Calendar = (props) => {
     }
   }
 
-  const occasions = [
-    {
-      startTime: "30.11.2022:10.00",
-      endTime: "30.11.2022:12.00",
-      type: "luento",
-      courseCode: "CS-101",
-      name: "Tietotekniikan alkeet"
-    },
-    {
-      startTime: "1.12.2022:10.00",
-      endTime: "1.12.2022:12.00",
-      type: "luento",
-      courseCode: "CS-102",
-      name: "Tietotekniikan jatkokurssi"
-    },
-    {
-      startTime: "3.12.2022:12.00",
-      endTime: "2.12.2022:14.00",
-      type: "luento",
-      courseCode: "TU-101",
-      name: "Tuotantotalous 1"
-    },
-    {
-      startTime: "3.12.2022:14.00",
-      endTime: "3.12.2022:16.00",
-      type: "luento",
-      courseCode: "MS-501",
-      name: "Todennäköisyys ja tilasto"
-    },
-    {
-      startTime: "29.11.2022:12.00",
-      endTime: "29.11.2022:14.00",
-      type: "luento",
-      courseCode: "MS-502",
-      name: "Todennäköisyys ja tilasto"
-    },
-    {
-      startTime: "1.12.2022:12.00",
-      endTime: "1.12.2022:14.00",
-      type: "luento",
-      courseCode: "MS-503",
-      name: "Todennäköisyys ja tilasto"
-    },
-    {
-      startTime: "2.12.2022:08.00",
-      endTime: "2.11.2022:10.00",
-      type: "luento",
-      courseCode: "CS-101",
-      name: "Todennäköisyys ja tilastotieteen peruskurssi"
-    },
-    {
-      startTime: "2.12.2022:12.00",
-      endTime: "2.12.2022:15.00",
-      type: "luento",
-      courseCode: "CS-102",
-      name: "Todennäköisyys ja tilasto"
-    }
-  ]
-
   const sortOccasions = (arr) => {
     const ret = {}
     arr.map((obj) => {
@@ -299,6 +240,10 @@ const Canvas = styled.div`
   overflow: scroll;
   border-top: 1px solid grey;
   border-right: 1px solid grey;
+`
+
+const Error = styled.p`
+  color: red;
 `
 
 const Week = styled.div`
