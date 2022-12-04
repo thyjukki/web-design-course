@@ -2,7 +2,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "@apollo/client"
 import styled from "styled-components"
-import { Button, Table } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { GET_ENROLLMENT_INSTANCE_IDS } from "./graphql/user"
 import { SEARCH_COURSE_INSTANCES } from "./graphql/course"
 import { ENROLL_ON_COURSE } from "./graphql/course"
@@ -38,6 +38,9 @@ export const CourseSearch = () => {
     })
   }
 
+  courseSearch.error &&
+    console.error(JSON.stringify(courseSearch.error, null, 2))
+
   const handleRemove = async (instance) => {
     await removeEnroll({
       variables: { userId: user, instanceId: instance },
@@ -62,7 +65,7 @@ export const CourseSearch = () => {
           {courseSearch.data.searchCourseInstances.map((instance) => {
             return (
               <CourseInfo
-                key={instance.parentCourse.code}
+                key={instance.id}
                 instance={instance}
                 enrollments={enrollments}
                 handleEnroll={handleEnroll}
@@ -80,7 +83,7 @@ const CourseInfo = (props) => {
   const { instance, enrollments, handleEnroll, handleRemove } = props
   const { parentCourse } = instance
 
-  console.log(instance)
+  const now = new Date()
 
   return (
     <InfoContainer key={parentCourse.code}>
@@ -103,20 +106,34 @@ const CourseInfo = (props) => {
         </div>
       </InfoContent>
       <SignUpSection>
-        {enrollments.data &&
-        enrollments.data.getCourseEnrollments.some(
-          (enrollment) => enrollment.instance.id == instance.id
-        ) ? (
-          <Button
-            onClick={() => handleRemove(instance.id)}
-            className="btn btn-danger"
-          >
-            Peru ilmoittautuminen
-          </Button>
+        {instance.signupStart < now && instance.signupEnd > now ? (
+          <>
+            <p>
+              {instance.enrollments.length}/{instance.maxSize || "-"}
+            </p>
+            {enrollments.data &&
+            enrollments.data.getCourseEnrollments.some(
+              (enrollment) => enrollment.instance.id == instance.id
+            ) ? (
+              <Button
+                onClick={() => handleRemove(instance.id)}
+                className="btn btn-danger"
+              >
+                Peru ilmoittautuminen
+              </Button>
+            ) : (
+              <Button onClick={() => handleEnroll(instance.id)} className="btn">
+                Ilmoittaudu
+              </Button>
+            )}
+          </>
         ) : (
-          <Button onClick={() => handleEnroll(instance.id)} className="btn">
-            Ilmoittaudu
-          </Button>
+          <>
+            {instance.signupStart > now && (
+              <p>Ilmoittautuminen ei ole vielä alkanut</p>
+            )}
+            {instance.signupEnd < now && <p>Ilmoittautuminen sulkeutunut</p>}
+          </>
         )}
       </SignUpSection>
     </InfoContainer>
@@ -151,20 +168,4 @@ const H2 = styled.h2`
 
 const Error = styled.p`
   color: red;
-`
-
-const TableContainer = styled.div`
-  margin-top: 3rem;
-`
-
-const Row = styled.tr`
-  border: 2px solid black;
-`
-
-const Header = styled.th`
-  padding: 1rem;
-`
-
-const Detail = styled.td`
-  padding: 1rem;
 `

@@ -18,6 +18,8 @@ export const typeDefs = gql`
     endDate: String!
     signupStart: String
     signupEnd: String
+    maxSize: Int
+    enrollments: [CourseEnrollment]
     occasions: [Occasion]
   }
 

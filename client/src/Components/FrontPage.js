@@ -21,7 +21,7 @@ const FrontPage = () => {
 
   error && console.error(error)
   return (
-    <Cont>
+    <Container>
       {loading && <p>Loading</p>}
       {error && <p>Error: {error.message}</p>}
       <Calendar />
@@ -36,74 +36,11 @@ const FrontPage = () => {
           )
         })}
       </CurrentCourses>
-    </Cont>
+    </Container>
   )
 }
 
-const exampleCourses = [
-  {
-    name: "User-Centered Methods for Product and Service Design",
-    credits: 5,
-    code: "TU-101",
-    courseInstance: {
-      type: "Luento",
-      startDate: "5.9.2022",
-      endDate: "7.12.2022",
-      events: [
-        {
-          startDate: "5.9.2022",
-          endDate: "12.9.2022",
-          type: "Luento",
-          location: "T2 - C105 - Tietotekniikan talo"
-        },
-        {
-          startDate: "26.9.2022",
-          endDate: "10.10.2022",
-          type: "Luento",
-          location: "T2 - C105 - Tietotekniikan talo"
-        },
-        {
-          startDate: "24.10.2022",
-          endDate: "5.12.2022",
-          type: "Luento",
-          location: "T2 - C105 - Tietotekniikan talo"
-        }
-      ]
-    }
-  },
-  {
-    name: "Todennäköisyys ja tilastotiede",
-    credits: 5,
-    code: "MS-501",
-    courseInstance: {
-      type: "Luento",
-      startDate: "5.9.2022",
-      endDate: "7.12.2022",
-      events: [
-        {
-          startDate: "5.9.2022",
-          endDate: "12.9.2022",
-          type: "Luento",
-          location: "T2 - C105 - Tietotekniikan talo"
-        },
-        {
-          startDate: "26.9.2022",
-          endDate: "10.10.2022",
-          type: "Luento",
-          location: "T2 - C105 - Tietotekniikan talo"
-        },
-        {
-          startDate: "24.10.2022",
-          endDate: "5.12.2022",
-          type: "Luento",
-          location: "T2 - C105 - Tietotekniikan talo"
-        }
-      ]
-    }
-  }
-]
-
-const Cont = styled.div`
+const Container = styled.div`
   display: flex;
   padding-top: 50px;
 `
@@ -112,11 +49,6 @@ const CurrentCourses = styled.div``
 
 const CourseCont = styled.div`
   padding: 2px;
-`
-
-const Padd = styled.div`
-  width: 100%;
-  height: 20px;
 `
 
 export default FrontPage

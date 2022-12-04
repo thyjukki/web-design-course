@@ -105,11 +105,18 @@ export const resolvers = {
         courses.map(async (course) => {
           const rows = await CourseInstance.findAll({
             where: { courseCode: course.code },
-            include: {
-              model: Course,
-              as: "parentCourse"
-            }
+            include: [
+              {
+                model: Course,
+                as: "parentCourse"
+              },
+              {
+                model: CourseEnrollment,
+                as: "enrollments"
+              }
+            ]
           })
+          console.log(rows)
           return [...rows]
         })
       )

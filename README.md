@@ -1,7 +1,8 @@
-# web-design-course
+# Sisu 2.0
 
 ## Running
 
-- Install docker and node v16
+- Install docker and node
 - Copy the .env.example file into .env file and fill in the variable values
-- Run with `docker compose up`
+- Run `npm install` in client and server folders
+- Launch the application with `docker compose up`
