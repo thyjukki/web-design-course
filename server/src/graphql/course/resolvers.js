@@ -177,7 +177,6 @@ export const resolvers = {
 
   Mutation: {
     createCourse: async (_, args) => {
-      console.log(args)
       return Course.create(args)
     },
     deleteCourse: async (_, { code }) => {
