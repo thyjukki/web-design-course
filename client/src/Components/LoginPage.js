@@ -17,7 +17,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (data) {
-      localStorage.setItem("token", data.login)
+      localStorage.setItem("user", data.login)
       navigate("/")
     }
   })

@@ -11,8 +11,10 @@ const TopMenu = () => {
     useLazyQuery(GET_USER_INFO)
 
   useEffect(() => {
-    if (localStorage.getItem("token")) {
-      userInfo()
+    const user = localStorage.getItem("user") || ""
+    if (user) {
+      console.log(user)
+      userInfo({ variables: { userId: parseInt(user) } })
     }
   }, [])
 
@@ -20,12 +22,12 @@ const TopMenu = () => {
   data && console.log(data)
 
   const logout = () => {
-    localStorage.removeItem("token")
+    localStorage.removeItem("user")
     client.resetStore()
     navigate("/login")
   }
 
-  const loggedIn = localStorage.getItem("token")
+  const loggedIn = localStorage.getItem("user")
   return (
     <Navbar expand="lg">
       <Container fluid>
@@ -39,17 +41,20 @@ const TopMenu = () => {
               {loggedIn ? (
                 <>
                   <Nav className="me-auto">
-                    
-                    {data?.getUserInfo.roles.some(x  => x.role === "teacher") && 
-                    <Nav.Link eventKey="study-structure" href="#">
-                      Opintojen rakenne
-                    </Nav.Link>
-                    }
-                    {data?.getUserInfo.roles.some(x  => x.role === "student") && 
-                    <Nav.Link eventKey="manage-course" href="/manage-courses">
-                      Hallitse kursseja
-                    </Nav.Link>
-                    }
+                    {data?.getUserInfo.roles.some(
+                      (x) => x.role === "teacher"
+                    ) && (
+                      <Nav.Link eventKey="study-structure" href="#">
+                        Opintojen rakenne
+                      </Nav.Link>
+                    )}
+                    {data?.getUserInfo.roles.some(
+                      (x) => x.role === "student"
+                    ) && (
+                      <Nav.Link eventKey="manage-course" href="/manage-courses">
+                        Hallitse kursseja
+                      </Nav.Link>
+                    )}
                     <Nav.Link eventKey="profile" href="#">
                       Omat tiedot
                     </Nav.Link>
