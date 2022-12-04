@@ -15,35 +15,16 @@ import {
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import Rand from "rand-seed"
 
-import { gql, useLazyQuery } from "@apollo/client"
+import { useLazyQuery } from "@apollo/client"
+import { GET_OCCASIONS_FOR_USER } from "../graphql/user"
 
-
-const GET_OCCASIONS_FOR_USER = gql`
-  query GetOccasionsForUser($userId: ID) {
-    getOccasionsForUser(user: $userId) {
-      id
-      instance {
-        id
-        startDate
-        endDate
-        signupStart
-        signupEnd
-        parentCourse {
-          name
-          code
-        }
-      }
-      startDate
-      endDate
-    }
-  }
-`
-
-const Calendar = (props) => {
+const Calendar = () => {
   const [weekOffset, setOffset] = useState(0)
   const myRef = useRef(null)
 
-  const [getOccasions, { error, loading, data }] = useLazyQuery(GET_OCCASIONS_FOR_USER)
+  const [getOccasions, { error, loading, data }] = useLazyQuery(
+    GET_OCCASIONS_FOR_USER
+  )
 
   useEffect(() => {
     myRef?.current.scrollIntoView({
@@ -55,8 +36,7 @@ const Calendar = (props) => {
     if (user) {
       getOccasions({ variables: { userId: parseInt(user) } })
     }
-  },
-  [myRef])
+  }, [myRef])
 
   const current = new Date()
   const today = new Date(
@@ -97,8 +77,10 @@ const Calendar = (props) => {
   const sortOccasions = (arr) => {
     const ret = {}
     arr.map((obj) => {
-      const newDate =  new Date(parseInt(obj.startDate))
-      const sTime = `${newDate.getDate()}.${newDate.getMonth() + 1}.${newDate.getFullYear()}`
+      const newDate = new Date(parseInt(obj.startDate))
+      const sTime = `${newDate.getDate()}.${
+        newDate.getMonth() + 1
+      }.${newDate.getFullYear()}`
       if (ret.hasOwnProperty(sTime)) {
         ret[sTime].push(obj)
       } else {
@@ -134,7 +116,7 @@ const Calendar = (props) => {
         <DateHeader>{`su ${sun.getDate()}.${sun.getMonth() + 1}`}</DateHeader>
         <EndLine />
       </WeekDays>
-      
+
       {error && <Error>{error.message}</Error>}
       {loading && <p>Ladataan...</p>}
       {data ? (
@@ -197,7 +179,8 @@ const Calendar = (props) => {
           <Week>
             <Times myRef={myRef} />
           </Week>
-        </Canvas>)}
+        </Canvas>
+      )}
     </Container>
   )
 }
@@ -341,14 +324,18 @@ const getCourseColor = (courseName) => {
 
 const Day = (props) => {
   const { occ } = props
+  console.log(occ)
   let occStatus = false
   let startH = null
 
   const sortTimes = (arr) => {
     const ret = {}
     arr.map((obj) => {
-      const newDate =  new Date(parseInt(obj.startDate))
-      const sTime = newDate.toLocaleString(navigator.language, {hour: "2-digit", minute:"2-digit"})
+      const newDate = new Date(parseInt(obj.startDate))
+      const sTime = newDate.toLocaleString(navigator.language, {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
       ret[sTime] = obj
     })
     return ret
@@ -360,11 +347,16 @@ const Day = (props) => {
     <FullDay>
       {hours.map((hour) => {
         if (occStatus) {
-          const newDate =  new Date(parseInt(sorted[startH].endDate))
-          const sTime = newDate.toLocaleString(navigator.language, {hour: "2-digit", minute:"2-digit"})
+          const newDate = new Date(parseInt(sorted[startH].endDate))
+          const sTime = newDate.toLocaleString(navigator.language, {
+            hour: "2-digit",
+            minute: "2-digit"
+          })
           if (sTime === timeMatching[hour]) {
             console.log(sorted[startH])
-            const eventColour = getCourseColor(sorted[startH].instance.parentCourse.code)
+            const eventColour = getCourseColor(
+              sorted[startH].instance.parentCourse.code
+            )
             occStatus = false
             startH = null
             return <EventEnd key={hour} courseColor={eventColour} />
@@ -372,7 +364,9 @@ const Day = (props) => {
             return (
               <EventMid
                 key={hour}
-                courseColor={getCourseColor(sorted[startH].instance.parentCourse.code)}
+                courseColor={getCourseColor(
+                  sorted[startH].instance.parentCourse.code
+                )}
               />
             )
           }
@@ -380,13 +374,18 @@ const Day = (props) => {
           if (sorted && sorted.hasOwnProperty(hour)) {
             occStatus = true
             startH = hour
-            const newDate =  new Date(parseInt(sorted[startH].endDate))
-            const sTime = newDate.toLocaleString(navigator.language, {hour: "2-digit", minute:"2-digit"})
+            const newDate = new Date(parseInt(sorted[startH].endDate))
+            const sTime = newDate.toLocaleString(navigator.language, {
+              hour: "2-digit",
+              minute: "2-digit"
+            })
             return (
               <EventStart
                 key={hour}
                 time={`${hour}-${sTime}`}
-                courseColor={getCourseColor(sorted[startH].instance.parentCourse.code)}
+                courseColor={getCourseColor(
+                  sorted[startH].instance.parentCourse.code
+                )}
                 courseName={sorted[startH].instance.parentCourse.name}
               />
             )
@@ -461,7 +460,7 @@ const EventTime = styled.div`
 `
 
 const EventName = styled.div`
-  padding-left: 3px
-`;
+  padding-left: 3px;
+`
 
 export default Calendar
