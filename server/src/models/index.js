@@ -60,10 +60,12 @@ Occasion.belongsTo(CourseInstance, { foreignKey: "instanceId", as: "instance" })
 
 CourseEnrollment.hasMany(Occasion, {
   foreignKey: "instanceId",
+  sourceKey: "instanceId",
   as: "occasions"
 })
 Occasion.hasMany(CourseEnrollment, {
   foreignKey: "instanceId",
+  sourceKey: "instanceId",
   as: "enrollments"
 })
 
