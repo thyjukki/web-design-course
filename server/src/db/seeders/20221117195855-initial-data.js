@@ -14,7 +14,7 @@ module.exports = {
      */
     const bcrypt = require("bcryptjs")
     const now = new Date()
-    const passwords = ["salasana", "password", "hunter2"]
+    const passwords = ["salasana", "password", "hunter2", "ope123"]
     const salt = bcrypt.genSaltSync()
     const hashedPasswords = await Promise.all(
       passwords.map((passwd) => bcrypt.hash(passwd, salt))
@@ -50,6 +50,14 @@ module.exports = {
         fullName: "Teemu Teekkari",
         email: "t@kari.fi",
         password: hashedPasswords[2],
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        username: "ope",
+        fullName: "Ope Opettaja",
+        email: "ope@op.edu",
+        password: hashedPasswords[3],
         createdAt: now,
         updatedAt: now
       }
@@ -95,6 +103,12 @@ module.exports = {
       {
         userId: 4,
         role: "student",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 5,
+        role: "teacher",
         createdAt: now,
         updatedAt: now
       }
@@ -145,6 +159,22 @@ module.exports = {
         code: "MS-503",
         name: "Todennäköisyys ja tilastotiede",
         description: "Tällä kurssilla opetellaan tilastotiedettä",
+        credits: 5,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        code: "ELEC-101",
+        name: "Sähkön alkeet",
+        description: "Kurssilla pääsee opettelemaan s¨ähkö toimii",
+        credits: 5,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        code: "ELEC-102",
+        name: "Sähkömakkaran alkeet",
+        description: "Kurssilla pääsee grillamaan makkaraa sähköllä",
         credits: 5,
         createdAt: now,
         updatedAt: now
@@ -219,6 +249,26 @@ module.exports = {
         endDate: new Date("06 January 2023"),
         signupStart: new Date("05 December 2022"),
         signupEnd: new Date("25 December 2022"),
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        lecturerId: 1,
+        courseCode: "ELEC-101",
+        startDate: new Date("9 December 2023"),
+        endDate: new Date("30 December 2023"),
+        signupStart: new Date("04 December 2023"),
+        signupEnd: new Date("06 December 2023"),
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        lecturerId: 1,
+        courseCode: "ELEC-102",
+        startDate: new Date("09 December 2022"),
+        endDate: new Date("30 December 2022"),
+        signupStart: new Date("06 December 2022"),
+        signupEnd: new Date("09 December 2022"),
         createdAt: now,
         updatedAt: now
       }
@@ -350,6 +400,78 @@ module.exports = {
         type: "Exam",
         createdAt: now,
         updatedAt: now
+      },
+      {
+        instanceId: 7,
+        startDate: new Date("9 December 2022 15:00:00"),
+        endDate: new Date("9 December 2022 18:00:00"),
+        location: "U469",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 7,
+        startDate: new Date("16 December 2022 10:00:00"),
+        endDate: new Date("16 December 2022 13:00:00"),
+        location: "U469",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 7,
+        startDate: new Date("23 December 2022 10:00:00"),
+        endDate: new Date("23 December 2022 13:00:00"),
+        location: "U469",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 7,
+        startDate: new Date("23 December 2022 10:00:00"),
+        endDate: new Date("23 December 2022 13:00:00"),
+        location: "U469",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 8,
+        startDate: new Date("8 December 2022 15:00:00"),
+        endDate: new Date("8 December 2022 18:00:00"),
+        location: "U469",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 8,
+        startDate: new Date("15 December 2022 10:00:00"),
+        endDate: new Date("15 December 2022 13:00:00"),
+        location: "U469",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 8,
+        startDate: new Date("22 December 2022 10:00:00"),
+        endDate: new Date("22 December 2022 13:00:00"),
+        location: "U469",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 8,
+        startDate: new Date("29 December 2022 10:00:00"),
+        endDate: new Date("29 December 2022 13:00:00"),
+        location: "U469",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
       }
     ])
 
@@ -396,6 +518,12 @@ module.exports = {
         updatedAt: now
       },
       {
+        userId: 1,
+        instanceId: 7,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
         userId: 2,
         instanceId: 2,
         createdAt: now,
@@ -404,6 +532,13 @@ module.exports = {
       {
         userId: 2,
         instanceId: 1,
+        blockId: 2,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 2,
+        instanceId: 8,
         blockId: 2,
         createdAt: now,
         updatedAt: now
