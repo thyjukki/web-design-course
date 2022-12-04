@@ -1,10 +1,10 @@
-import React from "react"
+import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { gql, useQuery, useMutation } from "@apollo/client"
+import { gql, useLazyQuery, useMutation } from "@apollo/client"
 import styled from "styled-components"
 
 const SEARCH_COURSES = gql`
-  query ($searchWord: String!) {
+  query ($searchWord: String!, $userId: Int!) {
     searchCourses(word: $searchWord) {
       code
       name
@@ -20,7 +20,7 @@ const SEARCH_COURSES = gql`
         signupEnd
       }
     }
-    getUserInfo {
+    getUserInfo(userId: $userId) {
       username
       email
       fullName
@@ -49,10 +49,17 @@ export const ManageCourses = () => {
     formState: { errors }
   } = useForm()
 
-  const { loading, error, data } = useQuery(SEARCH_COURSES, {
-    variables: { searchWord: watch("searchWord") },
-    //skip: watch("searchWord") === ""
-  })
+  const [searchCoursesAndGetUserInfo, { loading, error, data }] =
+    useLazyQuery(SEARCH_COURSES)
+
+  useEffect(() => {
+    const user = localStorage.getItem("user") || ""
+    if (user) {
+      searchCoursesAndGetUserInfo({
+        variables: { userId: parseInt(user), searchWord: watch("searchWord") }
+      })
+    }
+  }, [])
 
   const [deleteCourse, { errorDelete }] = useMutation(DELETE_COURSE)
 
@@ -90,11 +97,15 @@ export const ManageCourses = () => {
                 <Detail>{course.code}</Detail>
                 <Detail>{course.name}</Detail>
                 <Detail>{course.credits}</Detail>
-                {course.instances && (
-                  <Detail>{course.instances.length}</Detail>
-                )}
-                {data?.getUserInfo.roles.some(x  => x.role === "teacher") &&  (
-                  <button onClick={() => deleteCourse({variables: {code: course.code}})}>Delete</button>
+                {course.instances && <Detail>{course.instances.length}</Detail>}
+                {data?.getUserInfo.roles.some((x) => x.role === "teacher") && (
+                  <button
+                    onClick={() =>
+                      deleteCourse({ variables: { code: course.code } })
+                    }
+                  >
+                    Delete
+                  </button>
                 )}
               </Row>
             ))}
