@@ -98,7 +98,7 @@ export const CreateCourse = () => {
 
             <input
               className="mb2"
-              onKeyPress={(event) => {
+              onKeyDown={(event) => {
                 if (!/[0-9]/.test(event.key)) {
                   event.preventDefault()
                 }
@@ -135,20 +135,4 @@ const H2 = styled.h2`
 
 const Error = styled.p`
   color: red;
-`
-
-const Table = styled.table`
-  margin-top: 3rem;
-`
-
-const Row = styled.tr`
-  border: 2px solid black;
-`
-
-const Header = styled.th`
-  padding: 1rem;
-`
-
-const Detail = styled.td`
-  padding: 1rem;
 `

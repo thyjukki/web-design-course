@@ -2,7 +2,7 @@ import React from "react"
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery } from "@apollo/client"
 import styled from "styled-components"
-import { Button, Table } from "react-bootstrap"
+import { Button } from "react-bootstrap"
 import { GET_ENROLLMENT_INSTANCE_IDS } from "./graphql/user"
 import { SEARCH_COURSE_INSTANCES } from "./graphql/course"
 import { ENROLL_ON_COURSE } from "./graphql/course"
@@ -151,20 +151,4 @@ const H2 = styled.h2`
 
 const Error = styled.p`
   color: red;
-`
-
-const TableContainer = styled.div`
-  margin-top: 3rem;
-`
-
-const Row = styled.tr`
-  border: 2px solid black;
-`
-
-const Header = styled.th`
-  padding: 1rem;
-`
-
-const Detail = styled.td`
-  padding: 1rem;
 `

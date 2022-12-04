@@ -24,6 +24,7 @@ const TopMenu = () => {
     client.resetStore()
     navigate("/login")
   }
+  data && console.log(data.getUserInfo.roles)
 
   const loggedIn = localStorage.getItem("user")
   return (
@@ -41,13 +42,6 @@ const TopMenu = () => {
                   <Nav className="me-auto">
                     {data?.getUserInfo?.roles.some(
                       (x) => x.role === "teacher"
-                    ) && (
-                      <Nav.Link eventKey="study-structure" href="#">
-                        Opintojen rakenne
-                      </Nav.Link>
-                    )}
-                    {data?.getUserInfo?.roles.some(
-                      (x) => x.role === "student"
                     ) && (
                       <Nav.Link eventKey="manage-course" href="/manage-courses">
                         Hallitse kursseja
