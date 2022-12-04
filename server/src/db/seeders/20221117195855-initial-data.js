@@ -164,6 +164,16 @@ module.exports = {
       },
       {
         lecturerId: 1,
+        courseCode: "CS-101",
+        startDate: new Date("05 October 2023"),
+        endDate: new Date("30 November 2023"),
+        signupStart: new Date("01 October 2023"),
+        signupEnd: new Date("06 October 2023"),
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        lecturerId: 1,
         courseCode: "CS-102",
         startDate: new Date("24 December 2022"),
         endDate: new Date("31 December 2022"),
@@ -376,6 +386,12 @@ module.exports = {
       {
         userId: 1,
         instanceId: 1,
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        userId: 1,
+        instanceId: 3,
         createdAt: now,
         updatedAt: now
       },

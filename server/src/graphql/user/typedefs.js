@@ -29,7 +29,7 @@ export const typeDefs = gql`
 
   type Query {
     getUsers: [User]
-    getUser(id: ID!): User
+    getUser(id: Int!): User
     getUserInfo(userId: Int!): User
   }
 
@@ -44,6 +44,6 @@ export const typeDefs = gql`
 
     login(username: String!, password: String!): String
 
-    deleteUser(id: ID!): String
+    deleteUser(id: Int!): String
   }
 `

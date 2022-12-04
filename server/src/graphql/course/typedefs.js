@@ -11,7 +11,7 @@ export const typeDefs = gql`
   }
 
   type CourseInstance {
-    id: ID!
+    id: Int!
     parentCourse: Course!
     lecturer: User
     startDate: String!
@@ -22,14 +22,14 @@ export const typeDefs = gql`
   }
 
   type CourseEnrollment {
-    id: ID!
+    id: Int!
     user: User!
     instance: CourseInstance!
     studyPlanBlock: StudyPlanBlock
   }
 
   type Occasion {
-    id: ID!
+    id: Int!
     instance: CourseInstance!
     type: OccasionType
     enrollments: [CourseEnrollment]
@@ -50,11 +50,16 @@ export const typeDefs = gql`
     getCourse(code: String!): Course
     searchCourses(word: String!): [Course]
     getCourseInstances: [CourseInstance]
-    getCourseInstance(id: ID!): CourseInstance
-    getCourseEnrollment(id: ID!): CourseEnrollment
-    getCourseEnrollments(user: ID, instance: ID, block: ID): [CourseEnrollment]
-    getOccasions(instance: ID): [Occasion]
-    getOccasionsForUser(user: ID, instance: ID): [Occasion]
+    searchCourseInstances(word: String!): [CourseInstance]
+    getCourseInstance(id: Int!): CourseInstance
+    getCourseEnrollment(id: Int!): CourseEnrollment
+    getCourseEnrollments(
+      user: Int
+      instance: Int
+      block: Int
+    ): [CourseEnrollment]
+    getOccasions(instance: Int): [Occasion]
+    getOccasionsForUser(user: Int, instance: Int): [Occasion]
   }
 
   type Mutation {
@@ -76,26 +81,22 @@ export const typeDefs = gql`
       signupEnd: String
     ): CourseInstance
 
-    deleteCourseInstance(id: ID!): String
+    deleteCourseInstance(id: Int!): String
 
     createOccasion(
       type: OccasionType!
       startDate: String!
       endDate: String!
       location: String!
-      instanceId: ID
+      instanceId: Int
     ): Occasion
 
-    deleteOccasion(id: ID!): String
+    deleteOccasion(id: Int!): String
 
-    createCourseEnrollment(
-      userId: ID!
-      instanceId: ID!
-      blockId: ID
-    ): CourseEnrollment
+    createCourseEnrollment(userId: Int!, instanceId: Int!, blockId: Int): String
 
-    updateCourseEnrollment(id: ID!, blockId: ID!): CourseEnrollment
+    updateCourseEnrollment(id: Int!, blockId: Int!): CourseEnrollment
 
-    deleteCourseEnrollment(id: ID!): String
+    deleteCourseEnrollment(userId: Int!, instanceId: Int!): String
   }
 `

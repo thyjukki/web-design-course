@@ -25,8 +25,18 @@ export const GET_USER_INFO = gql`
   }
 `
 
+export const GET_ENROLLMENT_INSTANCE_IDS = gql`
+  query ($userId: Int!) {
+    getCourseEnrollments(user: $userId) {
+      instance {
+        id
+      }
+    }
+  }
+`
+
 export const GET_OCCASIONS_FOR_USER = gql`
-  query GetOccasionsForUser($userId: ID) {
+  query GetOccasionsForUser($userId: Int) {
     getOccasionsForUser(user: $userId) {
       id
       instance {

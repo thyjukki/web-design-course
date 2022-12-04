@@ -26,6 +26,7 @@ const Calendar = () => {
     GET_OCCASIONS_FOR_USER
   )
 
+  error && console.error(JSON.stringify(error, null, 2))
   useEffect(() => {
     myRef?.current.scrollIntoView({
       behavior: "auto",
