@@ -34,3 +34,24 @@ export const GET_ENROLLMENT_INSTANCE_IDS = gql`
     }
   }
 `
+
+export const GET_OCCASIONS_FOR_USER = gql`
+  query GetOccasionsForUser($userId: ID) {
+    getOccasionsForUser(user: $userId) {
+      id
+      instance {
+        id
+        startDate
+        endDate
+        signupStart
+        signupEnd
+        parentCourse {
+          name
+          code
+        }
+      }
+      startDate
+      endDate
+    }
+  }
+`
