@@ -88,7 +88,6 @@ export const ManageCourses = () => {
               <Header>Nimi</Header>
               <Header>Opintopisteet</Header>
               <Header>Instansit</Header>
-              {/* TODO: Lisää kenttiä näkyviin kun expandaa */}
             </tr>
           </thead>
           <tbody>
