@@ -278,6 +278,33 @@ module.exports = {
       {
         instanceId: 1,
         startDate: new Date("05 December 2022 08:00:00"),
+        endDate: new Date("05 December 2022 10:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("12 December 2022 08:00:00"),
+        endDate: new Date("12 December 2022 10:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("19 December 2022 08:00:00"),
+        endDate: new Date("19 December 2022 10:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("26 December 2022 08:00:00"),
         endDate: new Date("26 December 2022 10:00:00"),
         location: "T1",
         type: "Lecture",
@@ -287,6 +314,42 @@ module.exports = {
       {
         instanceId: 1,
         startDate: new Date("1 December 2022 12:00:00"),
+        endDate: new Date("1 December 2022 14:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("8 December 2022 12:00:00"),
+        endDate: new Date("8 December 2022 14:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("15 December 2022 12:00:00"),
+        endDate: new Date("15 December 2022 14:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("22 December 2022 12:00:00"),
+        endDate: new Date("22 December 2022 14:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 1,
+        startDate: new Date("29 December 2022 12:00:00"),
         endDate: new Date("29 December 2022 14:00:00"),
         location: "T2",
         type: "Lecture",
@@ -296,6 +359,60 @@ module.exports = {
       {
         instanceId: 2,
         startDate: new Date("05 November 2022  10:00:00"),
+        endDate: new Date("05 November 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("12 November 2022  10:00:00"),
+        endDate: new Date("12 November 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("19 November 2022  10:00:00"),
+        endDate: new Date("19 November 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("26 November 2022  10:00:00"),
+        endDate: new Date("26 November 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("3 December 2022  10:00:00"),
+        endDate: new Date("3 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("10 December 2022  10:00:00"),
+        endDate: new Date("10 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("17 December 2022  10:00:00"),
         endDate: new Date("17 December 2022 12:00:00"),
         location: "T2",
         type: "Lecture",
@@ -305,7 +422,79 @@ module.exports = {
       {
         instanceId: 2,
         startDate: new Date("05 November 2022 14:00:00"),
-        endDate: new Date("17 December 2022 16:00:00"),
+        endDate: new Date("05 November 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("12 November 2022 14:00:00"),
+        endDate: new Date("12 November 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("17 November 2022 14:00:00"),
+        endDate: new Date("17 November 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("24 November 2022 14:00:00"),
+        endDate: new Date("24 November 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("1 December 2022 14:00:00"),
+        endDate: new Date("1 December 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("8 December 2022 14:00:00"),
+        endDate: new Date("8 December 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("15 December 2022 14:00:00"),
+        endDate: new Date("15 December 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("22 December 2022 14:00:00"),
+        endDate: new Date("22 December 2022 16:00:00"),
+        location: "A101",
+        type: "Excercise",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("29 December 2022 14:00:00"),
+        endDate: new Date("29 December 2022 16:00:00"),
         location: "A101",
         type: "Excercise",
         createdAt: now,
@@ -321,9 +510,117 @@ module.exports = {
         updatedAt: now
       },
       {
+        instanceId: 2,
+        startDate: new Date("8 December 2022 08:00:00"),
+        endDate: new Date("8 December 2022 12:00:00"),
+        location: "T2",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("15 December 2022 08:00:00"),
+        endDate: new Date("15 December 2022 12:00:00"),
+        location: "T2",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("22 December 2022 08:00:00"),
+        endDate: new Date("22 December 2022 12:00:00"),
+        location: "T2",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 2,
+        startDate: new Date("29 December 2022 08:00:00"),
+        endDate: new Date("29 December 2022 12:00:00"),
+        location: "T2",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
         instanceId: 3,
         startDate: new Date("01 November 2022 10:00:00"),
-        endDate: new Date("20 December 2022 14:00:00"),
+        endDate: new Date("01 December 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("01 November 2022 10:00:00"),
+        endDate: new Date("01 November 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("08 November 2022 10:00:00"),
+        endDate: new Date("08 November 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("15 November 2022 10:00:00"),
+        endDate: new Date("15 November 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("22 November 2022 10:00:00"),
+        endDate: new Date("22 November 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("01 December 2022 10:00:00"),
+        endDate: new Date("01 December 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("08 December 2022 10:00:00"),
+        endDate: new Date("08 December 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("15 December 2022 10:00:00"),
+        endDate: new Date("15 December 2022 14:00:00"),
+        location: "U420",
+        type: "Session",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 3,
+        startDate: new Date("22 December 2022 10:00:00"),
+        endDate: new Date("22 December 2022 14:00:00"),
         location: "U420",
         type: "Session",
         createdAt: now,
@@ -332,7 +629,25 @@ module.exports = {
       {
         instanceId: 4,
         startDate: new Date("05 December 2022  10:00:00"),
-        endDate: new Date("26 December 2022 12:00:00"),
+        endDate: new Date("05 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 4,
+        startDate: new Date("12 December 2022  10:00:00"),
+        endDate: new Date("12 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 4,
+        startDate: new Date("22 December 2022  10:00:00"),
+        endDate: new Date("22 December 2022 12:00:00"),
         location: "T2",
         type: "Lecture",
         createdAt: now,
@@ -349,8 +664,26 @@ module.exports = {
       },
       {
         instanceId: 5,
-        startDate: new Date("05 December 2022  11:00:00"),
-        endDate: new Date("26 December 2022 13:00:00"),
+        startDate: new Date("06 December 2022  11:00:00"),
+        endDate: new Date("06 December 2022 13:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 5,
+        startDate: new Date("13 December 2022  11:00:00"),
+        endDate: new Date("13 December 2022 13:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 5,
+        startDate: new Date("20 December 2022  11:00:00"),
+        endDate: new Date("20 December 2022 13:00:00"),
         location: "T2",
         type: "Lecture",
         createdAt: now,
@@ -359,7 +692,25 @@ module.exports = {
       {
         instanceId: 5,
         startDate: new Date("08 December 2022  11:00:00"),
-        endDate: new Date("29 December 2022 13:00:00"),
+        endDate: new Date("08 December 2022 13:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 5,
+        startDate: new Date("15 December 2022  11:00:00"),
+        endDate: new Date("15 December 2022 13:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 5,
+        startDate: new Date("22 December 2022  11:00:00"),
+        endDate: new Date("22 December 2022 13:00:00"),
         location: "T1",
         type: "Lecture",
         createdAt: now,
@@ -377,6 +728,33 @@ module.exports = {
       {
         instanceId: 6,
         startDate: new Date("07 December 2022  10:00:00"),
+        endDate: new Date("07 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 6,
+        startDate: new Date("14 December 2022  10:00:00"),
+        endDate: new Date("14 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 6,
+        startDate: new Date("21 December 2022  10:00:00"),
+        endDate: new Date("21 December 2022 12:00:00"),
+        location: "T2",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 6,
+        startDate: new Date("28 December 2022  10:00:00"),
         endDate: new Date("28 December 2022 12:00:00"),
         location: "T2",
         type: "Lecture",
@@ -386,7 +764,25 @@ module.exports = {
       {
         instanceId: 6,
         startDate: new Date("09 December 2022  08:00:00"),
-        endDate: new Date("30 December 2022 10:00:00"),
+        endDate: new Date("09 December 2022 10:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 6,
+        startDate: new Date("16 December 2022  08:00:00"),
+        endDate: new Date("16 December 2022 10:00:00"),
+        location: "T1",
+        type: "Lecture",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 6,
+        startDate: new Date("23 December 2022  08:00:00"),
+        endDate: new Date("23 December 2022 10:00:00"),
         location: "T1",
         type: "Lecture",
         createdAt: now,
@@ -439,35 +835,17 @@ module.exports = {
       },
       {
         instanceId: 8,
-        startDate: new Date("8 December 2022 15:00:00"),
-        endDate: new Date("8 December 2022 18:00:00"),
-        location: "U469",
-        type: "Lecture",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 8,
-        startDate: new Date("15 December 2022 10:00:00"),
-        endDate: new Date("15 December 2022 13:00:00"),
-        location: "U469",
-        type: "Lecture",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 8,
-        startDate: new Date("22 December 2022 10:00:00"),
-        endDate: new Date("22 December 2022 13:00:00"),
-        location: "U469",
-        type: "Lecture",
-        createdAt: now,
-        updatedAt: now
-      },
-      {
-        instanceId: 8,
-        startDate: new Date("29 December 2022 10:00:00"),
+        startDate: new Date("8 December 2022 10:00:00"),
         endDate: new Date("29 December 2022 13:00:00"),
+        location: "U469",
+        type: "Exam",
+        createdAt: now,
+        updatedAt: now
+      },
+      {
+        instanceId: 8,
+        startDate: new Date("8 December 2022 15:00:00"),
+        endDate: new Date("29 December 2022 18:00:00"),
         location: "U469",
         type: "Exam",
         createdAt: now,
