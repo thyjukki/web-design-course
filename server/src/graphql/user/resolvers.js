@@ -47,7 +47,7 @@ export const resolvers = {
         ]
       })
     },
-    getUserInfo: async (_, { userId }, context) => {
+    getUserInfo: async (_, { userId }) => {
       return User.findByPk(userId, {
         attributes: { exclude: ["password"] },
         include: [

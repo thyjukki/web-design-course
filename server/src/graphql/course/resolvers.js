@@ -74,6 +74,47 @@ export const resolvers = {
         ]
       })
     },
+    searchCourseInstances: async (_, { word }) => {
+      var whereBuilder = {}
+      if (word) {
+        whereBuilder = {
+          [Op.or]: [
+            {
+              name: {
+                [Op.like]: "%" + word + "%"
+              }
+            },
+            {
+              code: {
+                [Op.like]: "%" + word + "%"
+              }
+            }
+          ]
+        }
+      }
+      const courses = await Course.findAll({
+        where: whereBuilder,
+        include: [
+          {
+            model: CourseInstance,
+            as: "instances"
+          }
+        ]
+      })
+      const instances = await Promise.all(
+        courses.map(async (course) => {
+          const rows = await CourseInstance.findAll({
+            where: { courseCode: course.code },
+            include: {
+              model: Course,
+              as: "parentCourse"
+            }
+          })
+          return [...rows]
+        })
+      )
+      return instances.flat()
+    },
     getCourseInstance: async (_, { id }) => {
       return CourseInstance.findByPk(id, {
         include: [
@@ -231,9 +272,19 @@ export const resolvers = {
         return e
       }
     },
-    createCourseEnrollment: async (_, args) => {
-      const enrollment = await CourseEnrollment.create(args)
-      return enrollment.reload({ include: { all: true } })
+    createCourseEnrollment: async (_, { userId, instanceId, blockId }) => {
+      const result = await CourseEnrollment.findAll({
+        where: { userId: userId, instanceId: instanceId }
+      })
+      if (result.length == 0) {
+        const enrollment = await CourseEnrollment.create({
+          userId,
+          instanceId,
+          blockId
+        })
+        return `Enrollment ${enrollment.id}`
+      }
+      return "Already enrolled"
     },
     updateCourseEnrollment: async (_, { id, blockId }) => {
       const enrollment = await CourseEnrollment.findOne({
@@ -276,10 +327,10 @@ export const resolvers = {
         ]
       })
     },
-    deleteCourseEnrollment: async (_, { id }) => {
+    deleteCourseEnrollment: async (_, { userId, instanceId }) => {
       try {
-        CourseEnrollment.destroy({ where: { id } })
-        return `CourseEnrollment ${id} deleted`
+        CourseEnrollment.destroy({ where: { userId, instanceId } })
+        return `CourseEnrollment deleted`
       } catch (e) {
         console.error(e)
         return e
