@@ -80,7 +80,7 @@ const CourseInfo = (props) => {
   const { instance, enrollments, handleEnroll, handleRemove } = props
   const { parentCourse } = instance
 
-  console.log(instance)
+  const now = new Date()
 
   return (
     <InfoContainer key={parentCourse.code}>
@@ -103,20 +103,31 @@ const CourseInfo = (props) => {
         </div>
       </InfoContent>
       <SignUpSection>
-        {enrollments.data &&
-        enrollments.data.getCourseEnrollments.some(
-          (enrollment) => enrollment.instance.id == instance.id
-        ) ? (
-          <Button
-            onClick={() => handleRemove(instance.id)}
-            className="btn btn-danger"
-          >
-            Peru ilmoittautuminen
-          </Button>
+        {instance.signupStart < now && instance.signupEnd > now ? (
+          <>
+            {enrollments.data &&
+            enrollments.data.getCourseEnrollments.some(
+              (enrollment) => enrollment.instance.id == instance.id
+            ) ? (
+              <Button
+                onClick={() => handleRemove(instance.id)}
+                className="btn btn-danger"
+              >
+                Peru ilmoittautuminen
+              </Button>
+            ) : (
+              <Button onClick={() => handleEnroll(instance.id)} className="btn">
+                Ilmoittaudu
+              </Button>
+            )}
+          </>
         ) : (
-          <Button onClick={() => handleEnroll(instance.id)} className="btn">
-            Ilmoittaudu
-          </Button>
+          <>
+            {instance.signupStart > now && (
+              <p>Ilmoittautuminen ei ole vielä alkanut</p>
+            )}
+            {instance.signupEnd < now && <p>Ilmoittautuminen sulkeutunut</p>}
+          </>
         )}
       </SignUpSection>
     </InfoContainer>
