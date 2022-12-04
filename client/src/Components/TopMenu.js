@@ -13,13 +13,11 @@ const TopMenu = () => {
   useEffect(() => {
     const user = localStorage.getItem("user") || ""
     if (user) {
-      console.log(user)
       userInfo({ variables: { userId: parseInt(user) } })
     }
   }, [])
 
   error && console.error(JSON.stringify(error, null, 2))
-  data && console.log(data)
 
   const logout = () => {
     localStorage.removeItem("user")
