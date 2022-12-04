@@ -32,6 +32,7 @@ export const CourseInstance = sequelize.define("CourseInstance", {
   endDate: Sequelize.DATE,
   signupStart: Sequelize.DATE,
   signupEnd: Sequelize.DATE,
+  maxSize: Sequelize.INTEGER,
   courseCode: {
     type: Sequelize.STRING,
     references: {

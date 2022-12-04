@@ -189,6 +189,7 @@ module.exports = {
         endDate: new Date("30 November 2022"),
         signupStart: new Date("01 October 2022"),
         signupEnd: new Date("06 October 2022"),
+        maxSize: 10,
         createdAt: now,
         updatedAt: now
       },
@@ -199,6 +200,7 @@ module.exports = {
         endDate: new Date("30 November 2023"),
         signupStart: new Date("01 October 2023"),
         signupEnd: new Date("06 October 2023"),
+        maxSize: 5,
         createdAt: now,
         updatedAt: now
       },
@@ -209,6 +211,7 @@ module.exports = {
         endDate: new Date("31 December 2022"),
         signupStart: new Date("05 December 2022"),
         signupEnd: new Date("25 December 2022"),
+        maxSize: 3,
         createdAt: now,
         updatedAt: now
       },
@@ -229,6 +232,7 @@ module.exports = {
         endDate: new Date("31 December 2022"),
         signupStart: new Date("29 November 2022"),
         signupEnd: new Date("25 December 2022"),
+        maxSize: 100,
         createdAt: now,
         updatedAt: now
       },
@@ -249,6 +253,7 @@ module.exports = {
         endDate: new Date("06 January 2023"),
         signupStart: new Date("05 December 2022"),
         signupEnd: new Date("25 December 2022"),
+        maxSize: 100,
         createdAt: now,
         updatedAt: now
       },
@@ -259,6 +264,7 @@ module.exports = {
         endDate: new Date("30 December 2023"),
         signupStart: new Date("04 December 2023"),
         signupEnd: new Date("06 December 2023"),
+        maxSize: 100,
         createdAt: now,
         updatedAt: now
       },
@@ -269,6 +275,7 @@ module.exports = {
         endDate: new Date("30 December 2022"),
         signupStart: new Date("06 December 2022"),
         signupEnd: new Date("09 December 2022"),
+        maxSize: 10,
         createdAt: now,
         updatedAt: now
       }

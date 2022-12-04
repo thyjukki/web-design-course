@@ -14,6 +14,10 @@ export const SEARCH_COURSE_INSTANCES = gql`
       endDate
       signupStart
       signupEnd
+      maxSize
+      enrollments {
+        id
+      }
     }
   }
 `

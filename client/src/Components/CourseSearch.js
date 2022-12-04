@@ -38,6 +38,9 @@ export const CourseSearch = () => {
     })
   }
 
+  courseSearch.error &&
+    console.error(JSON.stringify(courseSearch.error, null, 2))
+
   const handleRemove = async (instance) => {
     await removeEnroll({
       variables: { userId: user, instanceId: instance },
@@ -62,7 +65,7 @@ export const CourseSearch = () => {
           {courseSearch.data.searchCourseInstances.map((instance) => {
             return (
               <CourseInfo
-                key={instance.parentCourse.code}
+                key={instance.id}
                 instance={instance}
                 enrollments={enrollments}
                 handleEnroll={handleEnroll}
@@ -105,6 +108,9 @@ const CourseInfo = (props) => {
       <SignUpSection>
         {instance.signupStart < now && instance.signupEnd > now ? (
           <>
+            <p>
+              {instance.enrollments.length}/{instance.maxSize || "-"}
+            </p>
             {enrollments.data &&
             enrollments.data.getCourseEnrollments.some(
               (enrollment) => enrollment.instance.id == instance.id
