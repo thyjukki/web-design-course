@@ -15,17 +15,28 @@ import {
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa"
 import Rand from "rand-seed"
 
-const Calendar = (props) => {
+import { useLazyQuery } from "@apollo/client"
+import { GET_OCCASIONS_FOR_USER } from "../graphql/user"
+
+const Calendar = () => {
   const [weekOffset, setOffset] = useState(0)
   const myRef = useRef(null)
 
+  const [getOccasions, { error, loading, data }] = useLazyQuery(
+    GET_OCCASIONS_FOR_USER
+  )
+
   useEffect(() => {
-    myRef.current.scrollIntoView({
+    myRef?.current.scrollIntoView({
       behavior: "auto",
       block: "start",
       inline: "start"
     })
-  })
+    const user = localStorage.getItem("user") || ""
+    if (user) {
+      getOccasions({ variables: { userId: parseInt(user) } })
+    }
+  }, [myRef])
 
   const current = new Date()
   const today = new Date(
@@ -63,69 +74,13 @@ const Calendar = (props) => {
     }
   }
 
-  const occasions = [
-    {
-      startTime: "30.11.2022:10.00",
-      endTime: "30.11.2022:12.00",
-      type: "luento",
-      courseCode: "CS-101",
-      name: "Tietotekniikan alkeet"
-    },
-    {
-      startTime: "1.12.2022:10.00",
-      endTime: "1.12.2022:12.00",
-      type: "luento",
-      courseCode: "CS-102",
-      name: "Tietotekniikan jatkokurssi"
-    },
-    {
-      startTime: "3.12.2022:12.00",
-      endTime: "2.12.2022:14.00",
-      type: "luento",
-      courseCode: "TU-101",
-      name: "Tuotantotalous 1"
-    },
-    {
-      startTime: "3.12.2022:14.00",
-      endTime: "3.12.2022:16.00",
-      type: "luento",
-      courseCode: "MS-501",
-      name: "Todennäköisyys ja tilasto"
-    },
-    {
-      startTime: "29.11.2022:12.00",
-      endTime: "29.11.2022:14.00",
-      type: "luento",
-      courseCode: "MS-502",
-      name: "Todennäköisyys ja tilasto"
-    },
-    {
-      startTime: "1.12.2022:12.00",
-      endTime: "1.12.2022:14.00",
-      type: "luento",
-      courseCode: "MS-503",
-      name: "Todennäköisyys ja tilasto"
-    },
-    {
-      startTime: "2.12.2022:08.00",
-      endTime: "2.11.2022:10.00",
-      type: "luento",
-      courseCode: "CS-101",
-      name: "Todennäköisyys ja tilastotieteen peruskurssi"
-    },
-    {
-      startTime: "2.12.2022:12.00",
-      endTime: "2.12.2022:15.00",
-      type: "luento",
-      courseCode: "CS-102",
-      name: "Todennäköisyys ja tilasto"
-    }
-  ]
-
   const sortOccasions = (arr) => {
     const ret = {}
     arr.map((obj) => {
-      const sTime = obj.startTime.split(":")[0]
+      const newDate = new Date(parseInt(obj.startDate))
+      const sTime = `${newDate.getDate()}.${
+        newDate.getMonth() + 1
+      }.${newDate.getFullYear()}`
       if (ret.hasOwnProperty(sTime)) {
         ret[sTime].push(obj)
       } else {
@@ -135,7 +90,7 @@ const Calendar = (props) => {
     return ret
   }
 
-  const occSorted = sortOccasions(occasions)
+  const occSorted = data ? sortOccasions(data.getOccasionsForUser) : []
 
   return (
     <Container>
@@ -161,60 +116,71 @@ const Calendar = (props) => {
         <DateHeader>{`su ${sun.getDate()}.${sun.getMonth() + 1}`}</DateHeader>
         <EndLine />
       </WeekDays>
-      <Canvas>
-        <Week>
-          <Times myRef={myRef} />
-          <Day
-            occ={
-              occSorted[
-                `${mon.getDate()}.${mon.getMonth() + 1}.${mon.getFullYear()}`
-              ]
-            }
-          />
-          <Day
-            occ={
-              occSorted[
-                `${tue.getDate()}.${tue.getMonth() + 1}.${tue.getFullYear()}`
-              ]
-            }
-          />
-          <Day
-            occ={
-              occSorted[
-                `${wed.getDate()}.${wed.getMonth() + 1}.${wed.getFullYear()}`
-              ]
-            }
-          />
-          <Day
-            occ={
-              occSorted[
-                `${thu.getDate()}.${thu.getMonth() + 1}.${thu.getFullYear()}`
-              ]
-            }
-          />
-          <Day
-            occ={
-              occSorted[
-                `${fri.getDate()}.${fri.getMonth() + 1}.${fri.getFullYear()}`
-              ]
-            }
-          />
-          <Day
-            occ={
-              occSorted[
-                `${sat.getDate()}.${sat.getMonth() + 1}.${sat.getFullYear()}`
-              ]
-            }
-          />
-          <Day
-            occ={
-              occSorted[
-                `${sun.getDate()}.${sun.getMonth() + 1}.${sun.getFullYear()}`
-              ]
-            }
-          />
-        </Week>
-      </Canvas>
+
+      {error && <Error>{error.message}</Error>}
+      {loading && <p>Ladataan...</p>}
+      {data ? (
+        <Canvas>
+          <Week>
+            <Times myRef={myRef} />
+            <Day
+              occ={
+                occSorted[
+                  `${mon.getDate()}.${mon.getMonth() + 1}.${mon.getFullYear()}`
+                ]
+              }
+            />
+            <Day
+              occ={
+                occSorted[
+                  `${tue.getDate()}.${tue.getMonth() + 1}.${tue.getFullYear()}`
+                ]
+              }
+            />
+            <Day
+              occ={
+                occSorted[
+                  `${wed.getDate()}.${wed.getMonth() + 1}.${wed.getFullYear()}`
+                ]
+              }
+            />
+            <Day
+              occ={
+                occSorted[
+                  `${thu.getDate()}.${thu.getMonth() + 1}.${thu.getFullYear()}`
+                ]
+              }
+            />
+            <Day
+              occ={
+                occSorted[
+                  `${fri.getDate()}.${fri.getMonth() + 1}.${fri.getFullYear()}`
+                ]
+              }
+            />
+            <Day
+              occ={
+                occSorted[
+                  `${sat.getDate()}.${sat.getMonth() + 1}.${sat.getFullYear()}`
+                ]
+              }
+            />
+            <Day
+              occ={
+                occSorted[
+                  `${sun.getDate()}.${sun.getMonth() + 1}.${sun.getFullYear()}`
+                ]
+              }
+            />
+          </Week>
+        </Canvas>
+      ) : (
+        <Canvas>
+          <Week>
+            <Times myRef={myRef} />
+          </Week>
+        </Canvas>
+      )}
     </Container>
   )
 }
@@ -257,6 +223,10 @@ const Canvas = styled.div`
   overflow: scroll;
   border-top: 1px solid grey;
   border-right: 1px solid grey;
+`
+
+const Error = styled.p`
+  color: red;
 `
 
 const Week = styled.div`
@@ -354,13 +324,18 @@ const getCourseColor = (courseName) => {
 
 const Day = (props) => {
   const { occ } = props
+  console.log(occ)
   let occStatus = false
   let startH = null
 
   const sortTimes = (arr) => {
     const ret = {}
     arr.map((obj) => {
-      const sTime = obj.startTime.split(":")[1]
+      const newDate = new Date(parseInt(obj.startDate))
+      const sTime = newDate.toLocaleString(navigator.language, {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
       ret[sTime] = obj
     })
     return ret
@@ -372,8 +347,16 @@ const Day = (props) => {
     <FullDay>
       {hours.map((hour) => {
         if (occStatus) {
-          if (sorted[startH].endTime.split(":")[1] === timeMatching[hour]) {
-            const eventColour = getCourseColor(sorted[startH].courseCode)
+          const newDate = new Date(parseInt(sorted[startH].endDate))
+          const sTime = newDate.toLocaleString(navigator.language, {
+            hour: "2-digit",
+            minute: "2-digit"
+          })
+          if (sTime === timeMatching[hour]) {
+            console.log(sorted[startH])
+            const eventColour = getCourseColor(
+              sorted[startH].instance.parentCourse.code
+            )
             occStatus = false
             startH = null
             return <EventEnd key={hour} courseColor={eventColour} />
@@ -381,7 +364,9 @@ const Day = (props) => {
             return (
               <EventMid
                 key={hour}
-                courseColor={getCourseColor(sorted[startH].courseCode)}
+                courseColor={getCourseColor(
+                  sorted[startH].instance.parentCourse.code
+                )}
               />
             )
           }
@@ -389,12 +374,19 @@ const Day = (props) => {
           if (sorted && sorted.hasOwnProperty(hour)) {
             occStatus = true
             startH = hour
+            const newDate = new Date(parseInt(sorted[startH].endDate))
+            const sTime = newDate.toLocaleString(navigator.language, {
+              hour: "2-digit",
+              minute: "2-digit"
+            })
             return (
               <EventStart
                 key={hour}
-                time={`${hour}-${sorted[startH].endTime.split(":")[1]}`}
-                courseColor={getCourseColor(sorted[startH].courseCode)}
-                courseName={sorted[startH].name}
+                time={`${hour}-${sTime}`}
+                courseColor={getCourseColor(
+                  sorted[startH].instance.parentCourse.code
+                )}
+                courseName={sorted[startH].instance.parentCourse.name}
               />
             )
           } else {
@@ -468,7 +460,7 @@ const EventTime = styled.div`
 `
 
 const EventName = styled.div`
-  padding-left: 3px
-`;
+  padding-left: 3px;
+`
 
 export default Calendar
