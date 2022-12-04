@@ -111,20 +111,29 @@ const CourseInfo = (props) => {
             <p>
               {instance.enrollments.length}/{instance.maxSize || "-"}
             </p>
-            {enrollments.data &&
-            enrollments.data.getCourseEnrollments.some(
-              (enrollment) => enrollment.instance.id == instance.id
-            ) ? (
-              <Button
-                onClick={() => handleRemove(instance.id)}
-                className="btn btn-danger"
-              >
-                Peru ilmoittautuminen
-              </Button>
+            {instance.enrollments.length >= instance.maxSize ? (
+              <p>Ilmoittautuminen täynnä</p>
             ) : (
-              <Button onClick={() => handleEnroll(instance.id)} className="btn">
-                Ilmoittaudu
-              </Button>
+              <>
+                {enrollments.data &&
+                enrollments.data.getCourseEnrollments.some(
+                  (enrollment) => enrollment.instance.id == instance.id
+                ) ? (
+                  <Button
+                    onClick={() => handleRemove(instance.id)}
+                    className="btn btn-danger"
+                  >
+                    Peru ilmoittautuminen
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => handleEnroll(instance.id)}
+                    className="btn"
+                  >
+                    Ilmoittaudu
+                  </Button>
+                )}
+              </>
             )}
           </>
         ) : (

@@ -243,6 +243,7 @@ module.exports = {
         endDate: new Date("24 December 2022"),
         signupStart: new Date("02 December 2022"),
         signupEnd: new Date("19 December 2022"),
+        maxSize: 1,
         createdAt: now,
         updatedAt: now
       },
