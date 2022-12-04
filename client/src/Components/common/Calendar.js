@@ -325,7 +325,6 @@ const getCourseColor = (courseName) => {
 
 const Day = (props) => {
   const { occ } = props
-  console.log(occ)
   let occStatus = false
   let startH = null
 
@@ -354,7 +353,6 @@ const Day = (props) => {
             minute: "2-digit"
           })
           if (sTime === timeMatching[hour]) {
-            console.log(sorted[startH])
             const eventColour = getCourseColor(
               sorted[startH].instance.parentCourse.code
             )
