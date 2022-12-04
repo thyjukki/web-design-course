@@ -1,32 +1,37 @@
-import React from "react"
+import React, { useEffect } from "react"
 import Course from "./common/Course"
-import { gql, useQuery } from "@apollo/client"
+import { useLazyQuery } from "@apollo/client"
 import styled from "styled-components"
+import { GET_COURSE_ENROLLMENTS } from "./graphql/user"
 
-const COURSES = gql`
-  query {
-    getCourses {
-      code
-      name
-    }
-  }
-`
 import Calendar from "./common/Calendar"
 
 const FrontPage = () => {
-  const { loading, error } = useQuery(COURSES)
+  const [getEnrollments, { error, loading, data }] = useLazyQuery(
+    GET_COURSE_ENROLLMENTS
+  )
+
+  error && console.error(JSON.stringify(error, null, 2))
+  useEffect(() => {
+    const user = localStorage.getItem("user") || ""
+    if (user) {
+      getEnrollments({ variables: { user: parseInt(user) } })
+    }
+  }, [])
+
   error && console.error(error)
   return (
     <Cont>
       {loading && <p>Loading</p>}
       {error && <p>Error: {error.message}</p>}
       <Calendar />
+
       <CurrentCourses>
         <h2>Aktiiviset opinnot</h2>
-        {exampleCourses.map((course) => {
+        {data?.getCourseEnrollments.map((enrollment) => {
           return (
-            <CourseCont key={course.code}>
-              <Course course={course} />
+            <CourseCont key={enrollment.instance.parentCourse.code}>
+              <Course courseInstance={enrollment.instance} />
             </CourseCont>
           )
         })}

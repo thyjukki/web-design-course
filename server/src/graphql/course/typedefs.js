@@ -39,10 +39,10 @@ export const typeDefs = gql`
   }
 
   enum OccasionType {
-    LECTURE
-    EXCERCISE
-    SESSION
-    EXAM
+    Lecture
+    Excercise
+    Session
+    Exam
   }
 
   type Query {

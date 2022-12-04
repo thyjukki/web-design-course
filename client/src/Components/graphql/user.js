@@ -55,3 +55,27 @@ export const GET_OCCASIONS_FOR_USER = gql`
     }
   }
 `
+export const GET_COURSE_ENROLLMENTS = gql`
+  query GetCourseEnrollments($user: Int!) {
+    getCourseEnrollments(user: $user) {
+      id
+      instance {
+        id
+        parentCourse {
+          code
+          name
+          credits
+        }
+        startDate
+        endDate
+        occasions {
+          id
+          endDate
+          startDate
+          type
+          location
+        }
+      }
+    }
+  }
+`

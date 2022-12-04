@@ -200,7 +200,8 @@ export const resolvers = {
         include: [
           {
             model: CourseInstance,
-            as: "instance"
+            as: "instance",
+            include: { all: true }
           },
           {
             model: User,

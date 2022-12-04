@@ -5,28 +5,30 @@ import { Container } from "react-bootstrap"
 import Rand from "rand-seed"
 
 const Course = (props) => {
-  const { course } = props
-  const { courseInstance } = course
+  const { courseInstance } = props
+  const { parentCourse } = courseInstance
 
   return (
-    <BordContainer courseColor={getCourseColor(course.code)}>
+    <BordContainer courseColor={getCourseColor(parentCourse.code)}>
       <Accordion defaultActiveKey="0">
-        <Header courseColor={getCourseColor(course.code)}>
+        <Header courseColor={getCourseColor(parentCourse.code)}>
           <Cont>
-            <Credits courseColor={getCourseColor(course.code)}>
-              {course.credits}
+            <Credits courseColor={getCourseColor(parentCourse.code)}>
+              {parentCourse.credits}
             </Credits>
             <Wrapper>
-              <div>{course.name}</div>
-              <div>{`${courseInstance.startDate}-${courseInstance.endDate}`}</div>
+              <div>{parentCourse.name}</div>
+              <div>{`${getDate(courseInstance.startDate)}-${getDate(
+                courseInstance.endDate
+              )}`}</div>
             </Wrapper>
           </Cont>
         </Header>
 
-        <Body courseColor={getCourseColor(course.code)}>
+        <Body courseColor={getCourseColor(parentCourse.code)}>
           <Container>
-            <div>{courseInstance.type}</div>
-            <Lecture events={courseInstance.events} />
+            <div>{/*courseInstance.type*/}</div>
+            <Lecture events={courseInstance.occasions} />
           </Container>
         </Body>
       </Accordion>
@@ -42,7 +44,7 @@ const Lecture = (props) => {
       {events.map((event) => {
         return (
           <Container key={event.startDate}>
-            <div>{`${event.startDate}-${event.endDate}`}</div>
+            <div>{`${getDate(event.startDate)}-${getDate(event.endDate)}`}</div>
             <div>{event.location}</div>
           </Container>
         )
@@ -65,6 +67,11 @@ function getDecimalPart(num) {
 const getCourseColor = (courseName) => {
   const rand = new Rand(courseName)
   return courseColors[getDecimalPart(rand.next()) % 4]
+}
+
+const getDate = (timestamp) => {
+  const date = new Date(parseInt(timestamp))
+  return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
 }
 
 const BordContainer = styled.div`
