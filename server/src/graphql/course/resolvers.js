@@ -139,8 +139,19 @@ export const resolvers = {
         whereBuilder["instanceId"] = args.instance
       }
       return Occasion.findAll({
-        include: { all: true },
-        where: whereBuilder
+        where: whereBuilder,
+        include: [
+          {
+            model: CourseEnrollment,
+            as: "enrollments",
+            include: { all: true }
+          },
+          {
+            model: CourseInstance,
+            as: "instance",
+            include: { all: true }
+          }
+        ]
       })
     },
     getOccasionsForUser: async (_, args) => {
@@ -200,7 +211,8 @@ export const resolvers = {
         include: [
           {
             model: CourseInstance,
-            as: "instance"
+            as: "instance",
+            include: { all: true }
           },
           {
             model: User,
