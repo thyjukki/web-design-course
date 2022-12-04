@@ -44,7 +44,9 @@ const Lecture = (props) => {
       {events.map((event) => {
         return (
           <Container key={event.startDate}>
-            <div>{`${getDate(event.startDate)}-${getDate(event.endDate)}`}</div>
+            <div>{`${getDateAndTime(event.startDate)}-${getDateAndTime(
+              event.endDate
+            )}`}</div>
             <div>{event.location}</div>
           </Container>
         )
@@ -72,6 +74,15 @@ const getCourseColor = (courseName) => {
 const getDate = (timestamp) => {
   const date = new Date(parseInt(timestamp))
   return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+}
+const getDateAndTime = (timestamp) => {
+  const date = new Date(parseInt(timestamp))
+  return `${date.getDate()}.${
+    date.getMonth() + 1
+  }.${date.getFullYear()} ${date.toLocaleTimeString("fi-FI", {
+    hour: "2-digit",
+    minute: "2-digit"
+  })}`
 }
 
 const BordContainer = styled.div`
