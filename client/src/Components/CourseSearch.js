@@ -57,62 +57,69 @@ export const CourseSearch = () => {
       {courseSearch.error && <Error>{courseSearch.error.message}</Error>}
       {courseSearch.loading && <p>Ladataan...</p>}
       {courseSearch.data && (
-        <TableContainer>
-          <Table striped bordered hover>
-            <thead>
-              <tr>
-                <Header>Kurssikoodi</Header>
-                <Header>Nimi</Header>
-                <Header>Opintopisteet</Header>
-                <Header>Aika</Header>
-                <Header>Ilmoittautuminen</Header>
-                {/* TODO: Lisää kenttiä näkyviin kun expandaa */}
-              </tr>
-            </thead>
-            <tbody>
-              {courseSearch.data.searchCourseInstances.map(
-                (instance, index) => (
-                  <Row key={index}>
-                    <Detail>{instance.parentCourse.code}</Detail>
-                    <Detail>{instance.parentCourse.name}</Detail>
-                    <Detail>{instance.parentCourse.credits}</Detail>
-                    <Detail>
-                      {new Date(Number(instance.startDate)).toLocaleDateString(
-                        "fi-FI"
-                      )}
-                      {" - "}
-                      {new Date(Number(instance.endDate)).toLocaleDateString(
-                        "fi-FI"
-                      )}
-                    </Detail>
-                    <Detail>
-                      {enrollments.data &&
-                      enrollments.data.getCourseEnrollments.some(
-                        (enrollment) => enrollment.instance.id == instance.id
-                      ) ? (
-                        <Button
-                          onClick={() => handleRemove(instance.id)}
-                          className="btn btn-danger"
-                        >
-                          Peru ilmoittautuminen
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() => handleEnroll(instance.id)}
-                          className="btn"
-                        >
-                          Ilmoittaudu
-                        </Button>
-                      )}
-                    </Detail>
-                  </Row>
-                )
-              )}
-            </tbody>
-          </Table>
-        </TableContainer>
+        <SearchResult>
+          <h2>{`${courseSearch.data.searchCourseInstances.length} hakutulosta`}</h2>
+          {courseSearch.data.searchCourseInstances.map((instance) => {
+            return (
+              <CourseInfo
+                key={instance.parentCourse.code}
+                instance={instance}
+                enrollments={enrollments}
+                handleEnroll={handleEnroll}
+                handleRemove={handleRemove}
+              />
+            )
+          })}
+        </SearchResult>
       )}
     </SearchContainer>
+  )
+}
+
+const CourseInfo = (props) => {
+  const { instance, enrollments, handleEnroll, handleRemove } = props
+  const { parentCourse } = instance
+
+  console.log(instance)
+
+  return (
+    <InfoContainer key={parentCourse.code}>
+      <InfoContent>
+        <h4>{`${parentCourse.name} (${parentCourse.credits} op)`}</h4>
+        <div>{`Kurssikoodi ${parentCourse.code}`}</div>
+        <div>
+          {`Opetusta ${new Date(Number(instance.startDate)).toLocaleDateString(
+            "fi-FI"
+          )}
+           - 
+          ${new Date(Number(instance.endDate)).toLocaleDateString("fi-FI")}`}
+        </div>
+        <div>
+          {`Ilmoittautuminen ${new Date(
+            Number(instance.signupStart)
+          ).toLocaleDateString("fi-FI")}
+           - 
+          ${new Date(Number(instance.signupEnd)).toLocaleDateString("fi-FI")}`}
+        </div>
+      </InfoContent>
+      <SignUpSection>
+        {enrollments.data &&
+        enrollments.data.getCourseEnrollments.some(
+          (enrollment) => enrollment.instance.id == instance.id
+        ) ? (
+          <Button
+            onClick={() => handleRemove(instance.id)}
+            className="btn btn-danger"
+          >
+            Peru ilmoittautuminen
+          </Button>
+        ) : (
+          <Button onClick={() => handleEnroll(instance.id)} className="btn">
+            Ilmoittaudu
+          </Button>
+        )}
+      </SignUpSection>
+    </InfoContainer>
   )
 }
 
@@ -123,6 +130,20 @@ const SearchContainer = styled.div`
   align-items: center;
   flex-direction: column;
 `
+
+const SearchResult = styled.div``
+
+const InfoContainer = styled.div`
+  width: 800px;
+  border-bottom: 1px solid #9b9b9b;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+`
+
+const SignUpSection = styled.div``
+
+const InfoContent = styled.div``
 
 const H2 = styled.h2`
   text-align: center;
