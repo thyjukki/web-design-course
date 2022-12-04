@@ -69,7 +69,7 @@ Occasion.hasMany(CourseEnrollment, {
   as: "enrollments"
 })
 
-sequelize.sync()
+sequelize.sync({ force: true })
 
 export {
   User,
