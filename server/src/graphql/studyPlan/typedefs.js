@@ -3,7 +3,7 @@ import { gql } from "apollo-server-express"
 // Type definitions for course related stuff
 export const typeDefs = gql`
   type StudyPlan {
-    id: ID!
+    id: Int!
     name: String!
     user: User
     children: [StudyPlanBlock]
@@ -11,7 +11,7 @@ export const typeDefs = gql`
   }
 
   type StudyPlanBlock {
-    id: ID!
+    id: Int!
     name: String!
     parent: StudyPlanBlock
     enrollments: [CourseEnrollment]
@@ -23,12 +23,12 @@ export const typeDefs = gql`
   }
 
   type Mutation {
-    createStudyPlan(name: String!, userId: ID!): StudyPlan
+    createStudyPlan(name: String!, userId: Int!): StudyPlan
 
-    createStudyPlanBlock(name: String!, parentId: ID): StudyPlanBlock
-    updateStudyPlanBaseBlock(studyPlanId: ID!, baseBlockId: ID!): StudyPlan
+    createStudyPlanBlock(name: String!, parentId: Int): StudyPlanBlock
+    updateStudyPlanBaseBlock(studyPlanId: Int!, baseBlockId: Int!): StudyPlan
 
-    deleteStudyPlan(id: ID!): String
-    deleteStudyPlanBlock(id: ID!): String
+    deleteStudyPlan(id: Int!): String
+    deleteStudyPlanBlock(id: Int!): String
   }
 `
