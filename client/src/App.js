@@ -1,14 +1,20 @@
-import React from "react"
+import React, { useEffect } from "react"
 import FrontPage from "./Components/FrontPage"
 import LoginPage from "./Components/LoginPage"
 
-import { Routes, Route } from "react-router-dom"
+import { Routes, Route, useNavigate } from "react-router-dom"
 import { CourseSearch } from "./Components/CourseSearch"
 import { ManageCourses } from "./Components/ManageCourses"
 import { CreateCourse } from "./Components/CreateCourse"
 import TopMenu from "./Components/TopMenu"
 
 function App() {
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (!localStorage.getItem("user")) {
+      navigate("/login")
+    }
+  }, [])
   return (
     <>
       <TopMenu />

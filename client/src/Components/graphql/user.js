@@ -7,8 +7,8 @@ export const LOGIN = gql`
 `
 
 export const GET_USER_INFO = gql`
-  query {
-    getUserInfo {
+  query ($userId: Int!) {
+    getUserInfo(userId: $userId) {
       username
       email
       fullName

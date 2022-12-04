@@ -1,17 +1,27 @@
 import React from "react"
-import { useState } from "react";
+import { useState } from "react"
 import { gql, useMutation } from "@apollo/client"
 import styled from "styled-components"
 
 const CREATE_COURSE_MUTATION = gql`
-mutation Mutation($code: String!, $name: String!, $credits: Int!, $description: String) {
-  createCourse(code: $code, name: $name, credits: $credits, description: $description) {
-    code
-    description
-    name
-    credits
+  mutation Mutation(
+    $code: String!
+    $name: String!
+    $credits: Int!
+    $description: String
+  ) {
+    createCourse(
+      code: $code
+      name: $name
+      credits: $credits
+      description: $description
+    ) {
+      code
+      description
+      name
+      credits
+    }
   }
-}
 `
 
 export const CreateCourse = () => {
@@ -22,14 +32,17 @@ export const CreateCourse = () => {
     credits: 0
   })
 
-  const [createLink,  { loading, error, data }] = useMutation(CREATE_COURSE_MUTATION, {
-    variables: {
-      code: formState.code,
-      name: formState.name,
-      description: formState.description,
-      credits: formState.credits
+  const [createLink, { loading, error, data }] = useMutation(
+    CREATE_COURSE_MUTATION,
+    {
+      variables: {
+        code: formState.code,
+        name: formState.name,
+        description: formState.description,
+        credits: formState.credits
+      }
     }
-  })
+  )
   error && console.error(JSON.stringify(error, null, 2))
 
   return (
